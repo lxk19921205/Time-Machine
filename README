@@ -9,3 +9,8 @@
 	激励：可以自定义一段话、或者一个图片、或者一段音频，用于在休息的时候，或者定时弹出以激励自己！
 3 进阶功能——TODO List：
 	记下短期的TODO，到时间提醒。
+
+开发环境：
+	ubuntu 11.04
+	eclipse 3.7 indigo + cdt8
+	source controlled by git
