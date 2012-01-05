@@ -15,6 +15,7 @@
 #include <syslog.h>
 #include <iostream>
 #include <gtk/gtk.h>
+#include "./../head/ui_views/main-window.h"
 
 using namespace std;
 
@@ -33,10 +34,8 @@ int main(int argc, char* argv[]) {
  */
 
 void init_main_window() {
-	GtkWidget *window;
-	window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-	gtk_widget_show(window);
-	gtk_main();
+	GtkWidget* window;
+	CMainWindow mainWindow(window);
 }
 
 /**

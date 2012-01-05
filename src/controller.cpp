@@ -7,8 +7,6 @@
 
 #include "../head/controller.h"
 
-
-CController::CController()
-{
+CController::CController() {
 
 }
