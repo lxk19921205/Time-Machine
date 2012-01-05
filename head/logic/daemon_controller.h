@@ -31,7 +31,7 @@ private:
 	bool lock_file(int fd);
 
 private:
-	static const char* LOG_NAME;
+	static const char* TM_LOG_NAME;
 	static const char* TM_LOCK_FILE;
 	static mode_t TM_LOCK_MODE;
 };

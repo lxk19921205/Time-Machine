@@ -19,7 +19,7 @@
 #include "../../head/logic/daemon_controller.h"
 
 
-const char* CDaemonController::LOG_NAME = "-----Time Machine d-----";
+const char* CDaemonController::TM_LOG_NAME = "-----Time Machine d-----";
 const char* CDaemonController::TM_LOCK_FILE = "/var/run/TimeMachine.pid";
 mode_t CDaemonController::TM_LOCK_MODE = (S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 
@@ -89,7 +89,7 @@ void CDaemonController::init_daemon()
 	int fd2 = dup(fd0);	//fd2应该==2
 
 	//init Log and check fds' correctness
-	openlog(LOG_NAME, LOG_CONS, LOG_DAEMON);
+	openlog(TM_LOG_NAME, LOG_CONS, LOG_DAEMON);
 	if (fd0 != 0 || fd1 != 1 || fd2 != 2)
 	{
 		syslog(LOG_ERR, "Initializing error: unexpected file descriptors %d %d %d", fd0, fd1, fd2);
