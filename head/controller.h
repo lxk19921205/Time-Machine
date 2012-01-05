@@ -16,6 +16,9 @@ class CController
 {
 public:
 	CController();
+
+private:
+
 };
 
 

@@ -9,26 +9,31 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <sys/resource.h>
+#include <unistd.h>
 #include <fcntl.h>
 #include <signal.h>
 #include <stdlib.h>
 #include <syslog.h>
-#include <iostream>
+#include <errno.h>
+#include <string.h>
+#include <stdio.h>
+
+#include "../head/tm_constants.h"
 
 using namespace std;
 
-void init_daemon_process(const char* cmd);
+void init_daemon_process(const char* log_name);
 
 int main()
 {
-	init_daemon_process("----------Time Machine----------");
+	init_daemon_process("-----Time Machine d-----");
 	return 0;
 }
 
 /**
  * 初始化daemon process，之后此进程就一直默默地工作着
  */
-void init_daemon_process(const char* cmd)
+void init_daemon_process(const char* log_name)
 {
 	//step 1
 	umask(0);
@@ -77,23 +82,30 @@ void init_daemon_process(const char* cmd)
 	{
 		rl.rlim_max = 1024;
 	}
+
+	//显式的一定要关闭的3个fd，与for循环里也许会重复，无所谓～
+	close(STDIN_FILENO);
+	close(STDOUT_FILENO);
+	close(STDERR_FILENO);
 	for (unsigned int i=0; i<rl.rlim_max;i++)
 	{
 		close(i);
 	}
 
 	//把fd 0，1，2和/dev/null关联起来
-	int fd0 = open("/dev/null", O_RDWR);
-	int fd1 = dup(0);
-	int fd2 = dup(0);
+	int fd0 = open("/dev/null", O_RDWR);	//fd0应该==0
+	int fd1 = dup(fd0);	//fd1应该==1
+	int fd2 = dup(fd0);	//fd2应该==2
 
-	//init Log
-	openlog(cmd, LOG_CONS, LOG_DAEMON);
+	//init Log and check fds' correctness
+	openlog(log_name, LOG_CONS, LOG_DAEMON);
 	if (fd0 != 0 || fd1 != 1 || fd2 != 2)
 	{
-		syslog(LOG_ERR, "unexpected file descriptors %d %d %d", fd0, fd1, fd2);
+		syslog(LOG_ERR, "Initializing error: unexpected file descriptors %d %d %d", fd0, fd1, fd2);
 		exit(1);
 	}
+
+	//TODO
 }
 
 /**
@@ -103,3 +115,41 @@ void remove_daemon_process()
 {
 
 }
+
+int lock_file(int fd)
+{
+	return 0;
+}
+
+/**
+ * 测试此daemon process是否已经运行
+ */
+bool already_running()
+{
+	int fd = open(TM_LOCK_FILE, O_RDWR | O_CREAT, TM_LOCK_MODE);
+	if (fd < 0)
+	{
+		syslog(LOG_ERR, "can't open %s : %s", TM_LOCK_FILE, strerror(errno));
+		exit(1);
+	}
+
+	if (lock_file(fd) < 0)
+	{
+		if (errno == EACCES || errno == EAGAIN)
+		{
+			close(fd);
+			return true;
+		}
+
+		syslog(LOG_ERR, "can't lock %s : %s", TM_LOCK_FILE, strerror(errno));
+		exit(1);
+	}
+
+	ftruncate(fd, 0);
+	char buffer[16];
+	sprintf(buffer, "%ld", (long) getpid());
+	write(fd, buffer, strlen(buffer) + 1);
+	return false;
+}
+
+
