@@ -8,10 +8,11 @@
 #ifndef MAIN_WINDOW_H_
 #define MAIN_WINDOW_H_
 
-class CMainWindow
-{
-	CMainWindow();
-};
+#include <gtk/gtk.h>
 
+class CMainWindow {
+public:
+	CMainWindow(GtkWidget* window);
+};
 
 #endif /* MAIN_WINDOW_H_ */
