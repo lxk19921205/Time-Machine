@@ -5,6 +5,10 @@
  *      Author: wjp
  */
 
+#include "../../head/ui_views/main-window.h"
 
+CMainWindow::CMainWindow()
+{
 
+}
 

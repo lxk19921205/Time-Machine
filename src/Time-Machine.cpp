@@ -14,22 +14,35 @@
 #include <stdlib.h>
 #include <syslog.h>
 #include <iostream>
+#include <gtk/gtk.h>
 
 using namespace std;
 
 void init_daemon_process(const char* cmd);
+void init_main_window();
 
-int main()
-{
-	init_daemon_process("----------Time Machine----------");
+int main(int argc, char* argv[]) {
+	gtk_init(&argc, &argv);
+	init_main_window();
+	//init_daemon_process("----------Time Machine----------");
 	return 0;
+}
+
+/**
+ * 初始化主界面设置
+ */
+
+void init_main_window() {
+	GtkWidget *window;
+	window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+	gtk_widget_show(window);
+	gtk_main();
 }
 
 /**
  * 初始化daemon process，之后此进程就一直默默地工作着
  */
-void init_daemon_process(const char* cmd)
-{
+void init_daemon_process(const char* cmd) {
 	//step 1
 	umask(0);
 
@@ -37,13 +50,10 @@ void init_daemon_process(const char* cmd)
 	getrlimit(RLIMIT_NOFILE, &rl);
 
 	pid_t pid = fork();
-	if (pid < 0)
-	{
+	if (pid < 0) {
 		//fork()失败了
 		exit(1);
-	}
-	else if (pid > 0)
-	{
+	} else if (pid > 0) {
 		//parent
 		exit(0);
 	}
@@ -58,13 +68,10 @@ void init_daemon_process(const char* cmd)
 	sa.sa_flags = 0;
 	sigaction(SIGHUP, &sa, NULL);
 	pid = fork();
-	if (pid < 0)
-	{
+	if (pid < 0) {
 		//fork()失败了
 		exit(1);
-	}
-	else if (pid > 0)
-	{
+	} else if (pid > 0) {
 		//parent process
 		exit(0);
 	}
@@ -73,12 +80,10 @@ void init_daemon_process(const char* cmd)
 	chdir("/");
 
 	//关闭所有打开的file descriptors
-	if (rl.rlim_max == RLIM_INFINITY)
-	{
+	if (rl.rlim_max == RLIM_INFINITY) {
 		rl.rlim_max = 1024;
 	}
-	for (unsigned int i=0; i<rl.rlim_max;i++)
-	{
+	for (unsigned int i = 0; i < rl.rlim_max; i++) {
 		close(i);
 	}
 
@@ -89,8 +94,7 @@ void init_daemon_process(const char* cmd)
 
 	//init Log
 	openlog(cmd, LOG_CONS, LOG_DAEMON);
-	if (fd0 != 0 || fd1 != 1 || fd2 != 2)
-	{
+	if (fd0 != 0 || fd1 != 1 || fd2 != 2) {
 		syslog(LOG_ERR, "unexpected file descriptors %d %d %d", fd0, fd1, fd2);
 		exit(1);
 	}
@@ -99,7 +103,6 @@ void init_daemon_process(const char* cmd)
 /**
  * 移除后台默默守候的进程
  */
-void remove_daemon_process()
-{
+void remove_daemon_process() {
 
 }
