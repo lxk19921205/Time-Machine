@@ -7,6 +7,9 @@
 //============================================================================
 
 
+#include <iostream>
+#include <stdlib.h>
+#include <string.h>
 #include <gtk/gtk.h>
 
 #include "./../head/ui_views/main-window.h"
@@ -17,15 +20,42 @@ using namespace std;
 
 void init_main_window();
 
+
+const char* START_CMD = "start";
+const char* STOP_CMD = "stop";
+
 int main(int argc, char** argv)
 {
-	gtk_init(&argc, &argv);
-	init_main_window();
+	switch (argc)
+	{
+	case 1:
+	{
+		//=====开启GUI=====
+		gtk_init(&argc, &argv);
+		init_main_window();
+		exit(0);
+		return 0;
+	}
+	case 2:
+	{
+		if (strcmp(argv[1], START_CMD) == 0)
+		{
+			//=====start service=====
+			//	CDaemonController daemon_controller;
+			//	daemon_controller.init_daemon();
+			//  TODO
+		}
+		else if (strcmp(argv[1], STOP_CMD) == 0)
+		{
+			//=====stop service=====
+			//TODO
+		}
+		break;
+	}
 
-//	CDaemonController daemon_controller;
-//	daemon_controller.init_daemon();
-
-	return 0;
+	default:
+		exit(1);
+	}
 }
 
 /**
