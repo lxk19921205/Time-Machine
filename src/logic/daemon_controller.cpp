@@ -120,15 +120,10 @@ void CDaemonController::init_daemon()
 //=====public method=====
 bool CDaemonController::already_running()
 {
-	int fd = open(TM_LOCK_FILE, O_RDWR | O_CREAT, TM_LOCK_MODE);
+	int fd = open(TM_LOCK_FILE, O_RDONLY, TM_LOCK_MODE);
 	if (fd < 0)
 	{
-		syslog(LOG_ERR, "can't open %s : %s in already_running()", TM_LOCK_FILE, strerror(errno));
-		if (errno == EACCES)
-		{
-			cout << "Error: Permission denied, use \'sudo\' instead." << endl;
-		}
-		exit(1);
+		return false;
 	}
 
 	struct flock fl;
