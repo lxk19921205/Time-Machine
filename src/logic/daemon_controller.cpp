@@ -15,9 +15,11 @@
 #include <syslog.h>
 #include <errno.h>
 #include <string.h>
+#include <iostream>
 
 #include "../../head/logic/daemon_controller.h"
 
+using namespace std;
 
 const char* CDaemonController::TM_LOG_NAME = "-----Time Machine d-----";
 const char* CDaemonController::TM_LOCK_FILE = "/var/run/TimeMachine.pid";
@@ -124,6 +126,10 @@ bool CDaemonController::already_running()
 	if (fd < 0)
 	{
 		syslog(LOG_ERR, "can't open %s : %s in already_running()", TM_LOCK_FILE, strerror(errno));
+		if (errno == EACCES)
+		{
+			cout << "Error: Permission denied, use \'sudo\' instead." << endl;
+		}
 		exit(1);
 	}
 
@@ -146,6 +152,10 @@ bool CDaemonController::lock_file()
 	if (fd < 0)
 	{
 		syslog(LOG_ERR, "can't open %s : %s in lock_file()", TM_LOCK_FILE, strerror(errno));
+		if (errno == EACCES)
+		{
+			cout << "Error: Permission denied, use \'sudo\' instead." << endl;
+		}
 		exit(1);
 	}
 
@@ -187,6 +197,10 @@ void CDaemonController::unlock_file()
 	if (fd < 0)
 	{
 		syslog(LOG_ERR, "can't open %s : %s in unlock_file()", TM_LOCK_FILE, strerror(errno));
+		if (errno == EACCES)
+		{
+			cout << "Error: Permission denied, use \'sudo\' instead." << endl;
+		}
 		exit(1);
 	}
 
