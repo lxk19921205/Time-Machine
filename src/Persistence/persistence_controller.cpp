@@ -17,7 +17,7 @@
 #include <errno.h>
 #include <string.h>
 
-#include "./../head/Persistence/persistence_controller.h"
+#include "../../head/Persistence/persistence_controller.h"
 
 using namespace std;
 
