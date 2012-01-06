@@ -9,3 +9,7 @@
 #include "../../head/logic/rest_controller.h"
 
 
+void CRestController::try_rest()
+{
+
+}

@@ -12,6 +12,7 @@
 class CRestController
 {
 public:
+	void try_rest();
 
 private:
 
