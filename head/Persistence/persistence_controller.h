@@ -38,8 +38,8 @@ struct UserData {
  */
 class PersistenceController {
 public:
-	UserData readUserData();
-	void writeUserData(UserData userData);
+	void readUserData(UserData* data);
+	void writeUserData(UserData& userData);
 };
 
 #endif

@@ -84,9 +84,8 @@ UserData analyseString(char* buff)
 	return result;
 }
 
-UserData PersistenceController::readUserData()
+void PersistenceController::readUserData(UserData* userData)
 {
-	UserData result;
 	int fd;
 	char buff[BUFFSIZE];
 
@@ -99,10 +98,9 @@ UserData PersistenceController::readUserData()
 		cout <<"read file failed!"<< endl;
 	}
 
-	result = analyseString(buff);
+	*userData = analyseString(buff);
 
 	close(fd);
-	return result;
 }
 
 void writeLineByInt(int fd, string head, int aim)
@@ -124,7 +122,7 @@ void writeLineByInt(int fd, string head, int aim)
 	}
 }
 
-void PersistenceController::writeUserData(UserData userData)
+void PersistenceController::writeUserData(UserData& userData)
 {
 	int fd;
 
