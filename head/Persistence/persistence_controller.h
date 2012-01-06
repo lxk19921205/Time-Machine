@@ -9,6 +9,8 @@
 #define PERSISTENCE_CONTROLLER
 
 #include <fcntl.h>
+#include <string.h>
+using namespace std;
 
 enum level{
 	//=====只提醒，因为用户自制力很强=====
@@ -57,6 +59,21 @@ struct UserData {
 
 	//=====用户设置的自制力等级，等级不同表现不同=====
 	level userLevel;
+
+	//=====休息MP3路径=====
+	string restMp3Path;
+
+	//=====激励MP3路径=====
+	string whipMp3Path;
+
+	//=====自定义命令行=====
+	string customCommand;
+
+	//=====图片路径=====
+	string imagePath;
+
+	//=====激励文字=====
+	string whipWord;
 };
 
 /**

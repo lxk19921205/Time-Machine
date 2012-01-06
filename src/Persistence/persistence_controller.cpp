@@ -80,6 +80,16 @@ void analyseString(UserData* userData, char* buff)
 
 			userData->userLevel = t;
 		}
+		else if(head.compare("restMp3Path") == 0)
+			userData->restMp3Path = value;
+		else if(head.compare("whipMp3Path") == 0)
+			userData->whipMp3Path = value;
+		else if(head.compare("customCommand") == 0)
+			userData->customCommand = value;
+		else if(head.compare("imagePath") == 0)
+			userData->imagePath = value;
+		else if(head.compare("whipWord") == 0)
+			userData->whipWord = value;
 	}
 }
 
@@ -100,6 +110,19 @@ void PersistenceController::readUserData(UserData* userData)
 	analyseString(userData, buff);
 
 	close(fd);
+}
+
+void writeLineByString(int fd, string head, string aim)
+{
+	string tail = "\n";
+	string totalString = head + aim + tail;
+
+	const char* total = totalString.c_str();
+	int length = totalString.length();
+	if(write(fd, total, length) != length)
+	{
+		cout <<"write file failed!"<< endl;
+	}
 }
 
 void writeLineByInt(int fd, string head, int aim)
@@ -135,6 +158,7 @@ void PersistenceController::writeUserData(UserData& userData)
 	writeLineByInt(fd, "lockTime:", userData.lockTime);
 	writeLineByInt(fd, "unLockTime:", userData.unLockTime);
 	writeLineByInt(fd, "delayTime:", userData.delayTime);
+
 	writeLineByInt(fd, "ifStartWithPower:", userData.ifStartWithPower);
 	writeLineByInt(fd, "ifBeep:", userData.ifBeep);
 	writeLineByInt(fd, "ifCloseScreen:", userData.ifCloseScreen);
@@ -142,6 +166,12 @@ void PersistenceController::writeUserData(UserData& userData)
 	writeLineByInt(fd, "canForceToExit:", userData.canForceToExit);
 	writeLineByInt(fd, "canDelay:", userData.canDelay);
 	writeLineByInt(fd, "level:", userData.userLevel);
+
+	writeLineByString(fd, "restMp3Path:", userData.restMp3Path);
+	writeLineByString(fd, "whipMp3Path:", userData.whipMp3Path);
+	writeLineByString(fd, "customCommand:", userData.customCommand);
+	writeLineByString(fd, "imagePath:", userData.imagePath);
+	writeLineByString(fd, "whipWord:", userData.whipWord);
 
 	close(fd);
 }
