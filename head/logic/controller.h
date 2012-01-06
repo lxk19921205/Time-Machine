@@ -9,11 +9,34 @@
 #define CONTROLLER_H_
 
 /**
- * 在后台默默控制的类
+ * 总的管理控制的类，管理console的输出和服务的启动
  */
 class CController {
 public:
-	CController();
+	/**
+	 * 开始在后台的服务
+	 */
+	void start_service();
+
+	/**
+	 * 停止在后台的服务
+	 */
+	void stop_service();
+
+	/**
+	 * 推迟休息
+	 */
+	void postpone_rest();
+
+	/**
+	 * 显示休息相关的参数
+	 */
+	void show_status();
+
+	/**
+	 * 在console打印帮助
+	 */
+	void show_help();
 
 private:
 

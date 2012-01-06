@@ -16,6 +16,7 @@
 
 #include "./../head/ui_views/main-window.h"
 #include "../head/logic/daemon_controller.h"
+#include "../head/logic/controller.h"
 
 using namespace std;
 
@@ -31,59 +32,9 @@ const char* POSTPONE_CMD = "postpone";
 const char* STATUS_CMD = "status";
 
 
-/**
- * 在console打印帮助
- */
-void show_help()
-{
-	cout << "帮助：  (请使用超级权限运行)" << endl
-			<< "  没有参数：启动图形界面" << endl
-			<< "  start：开始服务" << endl
-			<< "  stop: 结束服务" << endl
-			<< "  postpone：推迟休息" << endl;
-}
-
-/**
- * 开始在后台的服务
- */
-void start_service()
-{
-	//	CDaemonController daemon_controller;
-	//	daemon_controller.init_daemon();
-	//TODO
-	cout << "start service" << endl;
-}
-
-/**
- * 停止在后台的服务
- */
-void stop_service()
-{
-	//TODO
-	cout << "stop service" << endl;
-}
-
-/**
- * 推迟休息
- */
-void postpone_rest()
-{
-	//TODO
-	cout << "postpone service" << endl;
-}
-
-/**
- * 显示休息相关的参数
- */
-void show_status()
-{
-	//TODO
-	cout << "show status" << endl;
-}
-
-
 int main(int argc, char** argv)
 {
+	CController controller;
 	switch (argc)
 	{
 	case 1:
@@ -109,29 +60,35 @@ int main(int argc, char** argv)
 
 		if (strcmp(argv[1], START_CMD) == 0)
 		{
-			start_service();
+			//=====开启后台服务=====
+			controller.start_service();
+			return 0;
 		}
-		else if (strcmp(argv[1], STOP_CMD) == 0)
+		if (strcmp(argv[1], STOP_CMD) == 0)
 		{
-			stop_service();
+			//=====停止后台服务=====
+			controller.stop_service();
+			return 0;
 		}
-		else if (strcmp(argv[1], POSTPONE_CMD) == 0)
+		if (strcmp(argv[1], POSTPONE_CMD) == 0)
 		{
-			postpone_rest();
+			//=====推迟休息=====
+			controller.postpone_rest();
+			return 0;
 		}
-		else if (strcmp(argv[1], STATUS_CMD) == 0)
+		if (strcmp(argv[1], STATUS_CMD) == 0)
 		{
-			show_status();
+			//=====显示休息参数=====
+			controller.show_status();
+			return 0;
 		}
-		else
-		{
-			show_help();
-		}
+
+		controller.show_help();
 		break;
 	}
 
 	default:
-		show_help();
+		controller.show_help();
 		exit(1);
 	}
 }
