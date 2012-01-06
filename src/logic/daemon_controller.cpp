@@ -95,6 +95,26 @@ void CDaemonController::init_daemon()
 		syslog(LOG_ERR, "Initializing error: unexpected file descriptors %d %d %d", fd0, fd1, fd2);
 		exit(1);
 	}
+
+	//=====测试是否唯一运行=====
+	if (this->lock_file() == false)
+	{
+		//=====不是唯一运行的=====
+		syslog(LOG_INFO, "try to start up again when there is one service running!");
+		exit(1);
+	}
+
+
+	//TODO 做该做的事！
+	while(true)
+	{
+		;
+	}
+
+
+	//=====解锁完文件，可以结束了=====
+	this->unlock_file();
+	exit(0);
 }
 
 
@@ -103,32 +123,84 @@ bool CDaemonController::already_running()
 	int fd = open(TM_LOCK_FILE, O_RDWR | O_CREAT, TM_LOCK_MODE);
 	if (fd < 0)
 	{
-		syslog(LOG_ERR, "can't open %s : %s", TM_LOCK_FILE, strerror(errno));
+		syslog(LOG_ERR, "can't open %s : %s in already_running()", TM_LOCK_FILE, strerror(errno));
 		exit(1);
 	}
 
-	if (this->lock_file(fd) < 0)
+	struct flock fl;
+	fl.l_type = F_WRLCK;
+	fl.l_start = 0;
+	fl.l_whence = SEEK_SET;
+	fl.l_len = 0;
+
+	fcntl(fd, F_GETLK, &fl);
+	//=====如果不存在锁，则将l_type设为F_UNLCK，其余信息不变=====
+	close(fd);
+	return fl.l_type != F_UNLCK;
+}
+
+
+bool CDaemonController::lock_file()
+{
+	int fd = open(TM_LOCK_FILE, O_RDWR | O_CREAT, TM_LOCK_MODE);
+	if (fd < 0)
+	{
+		syslog(LOG_ERR, "can't open %s : %s in lock_file()", TM_LOCK_FILE, strerror(errno));
+		exit(1);
+	}
+
+	struct flock fl;
+	fl.l_type = F_WRLCK;
+	fl.l_start = 0;
+	fl.l_whence = SEEK_SET;
+	fl.l_len = 0;
+
+	if (fcntl(fd, F_SETLK, &fl) == -1)
 	{
 		if (errno == EACCES || errno == EAGAIN)
 		{
+			//无法锁住文件，已经被锁住了，说明已经有一个程序在运行了
 			close(fd);
-			return true;
+			return false;
 		}
-
-		syslog(LOG_ERR, "can't lock %s : %s", TM_LOCK_FILE, strerror(errno));
-		exit(1);
+		else
+		{
+			syslog(LOG_ERR, "can't lock %s : %s in lock_file()", TM_LOCK_FILE, strerror(errno));
+			exit(1);
+		}
 	}
 
+	//=====可以锁，写入pid=====
 	ftruncate(fd, 0);
 	char buffer[16];
 	sprintf(buffer, "%ld", (long) getpid());
 	write(fd, buffer, strlen(buffer) + 1);
-	return false;
+	close(fd);
+
+	return true;
 }
 
 
-bool CDaemonController::lock_file(int fd)
+void CDaemonController::unlock_file()
 {
-	return true;
+	int fd = open(TM_LOCK_FILE, O_RDWR | O_CREAT, TM_LOCK_MODE);
+	if (fd < 0)
+	{
+		syslog(LOG_ERR, "can't open %s : %s in unlock_file()", TM_LOCK_FILE, strerror(errno));
+		exit(1);
+	}
+
+	struct flock fl;
+	fl.l_type = F_UNLCK;
+	fl.l_start = 0;
+	fl.l_whence = SEEK_SET;
+	fl.l_len = 0;
+
+	if (fcntl(fd, F_SETLK, &fl) == -1)
+	{
+		syslog(LOG_ERR, "can't unlock file %s : %s in unlock_file()", TM_LOCK_FILE, strerror(errno));
+		exit(1);
+	}
+	close(fd);
 }
 

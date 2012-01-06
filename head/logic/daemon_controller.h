@@ -24,11 +24,16 @@ public:
 	 */
 	bool already_running();
 
-private:
+//private:
 	/**
-	 * 如果返回true，说明文件可以锁，因此此程序是当前唯一
+	 * 如果返回true，说明文件可以锁，那就锁上！因此此程序是当前唯一
+	 * 否则，说明文件已被锁住，已经有另一个实例在运行了
 	 */
-	bool lock_file(int fd);
+	bool lock_file();
+	/**
+	 * 在daemon process结束的时候解锁文件
+	 */
+	void unlock_file();
 
 private:
 	static const char* TM_LOG_NAME;

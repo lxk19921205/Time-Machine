@@ -19,6 +19,7 @@ using namespace std;
 
 
 void init_main_window();
+void do_test();
 
 
 const char* START_CMD = "start";
@@ -92,6 +93,12 @@ int main(int argc, char** argv)
 	}
 	case 2:
 	{
+		if (strcmp(argv[1], "test") == 0)
+		{
+			do_test();
+			return 0;
+		}
+
 		if (strcmp(argv[1], START_CMD) == 0)
 		{
 			start_service();
@@ -129,3 +136,21 @@ void init_main_window() {
 	CMainWindow mainWindow(window);
 }
 
+
+/**
+ * 专门用来调试的函数
+ */
+void do_test()
+{
+	CDaemonController daemon;
+//	daemon.init_daemon();
+	if (daemon.already_running())
+	{
+		cout << "already runnign" << endl;
+	}
+	else
+	{
+		cout << "not running!" << endl;
+	}
+
+}
