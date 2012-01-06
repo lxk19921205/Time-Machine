@@ -64,8 +64,11 @@ struct UserData {
  */
 class PersistenceController {
 public:
-	UserData readUserData();
-	void writeUserData(UserData userData);
+	//=====读用户数据文件=====
+	void readUserData(UserData* data);
+
+	//=====写用户数据文件=====
+	void writeUserData(UserData& userData);
 };
 
 #endif

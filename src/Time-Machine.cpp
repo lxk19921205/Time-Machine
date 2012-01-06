@@ -126,6 +126,8 @@ CMainWindow init_main_window()
 {
 	GladeXML* ui = glade_xml_new("mainFrame.glade", NULL, NULL);
 	CMainWindow mainWindow(ui);
+	GtkWidget* window = glade_xml_get_widget(ui, "settingWindow");
+	gtk_widget_show_all(window);
 	return mainWindow;
 }
 
