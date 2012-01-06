@@ -13,6 +13,8 @@
 class CMainWindow {
 public:
 	CMainWindow(GtkWidget* window);
+private:
+	void AddBackGroundImage(GtkWidget* window);
 };
 
 #endif /* MAIN_WINDOW_H_ */
