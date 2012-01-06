@@ -19,10 +19,12 @@ using namespace std;
 
 
 void init_main_window();
+void show_help();
 
 
 const char* START_CMD = "start";
 const char* STOP_CMD = "stop";
+const char* POSTPONE_CMD = "postpone";
 
 int main(int argc, char** argv)
 {
@@ -50,10 +52,16 @@ int main(int argc, char** argv)
 			//=====stop service=====
 			//TODO
 		}
+		else if (strcmp(argv[1], POSTPONE_CMD) == 0)
+		{
+			//=====postpone rest=====
+			//TODO
+		}
 		break;
 	}
 
 	default:
+		show_help();
 		exit(1);
 	}
 }
@@ -64,5 +72,18 @@ int main(int argc, char** argv)
 void init_main_window() {
 	GtkWidget* window;
 	CMainWindow mainWindow(window);
+}
+
+
+/**
+ * 在console打印帮助
+ */
+void show_help()
+{
+	cout << "帮助：" << endl
+			<< "  没有参数：启动图形界面" << endl
+			<< "  start：开始服务" << endl
+			<< "  stop: 结束服务" << endl
+			<< "  postpone：推迟休息" << endl;
 }
 
