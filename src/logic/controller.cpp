@@ -5,8 +5,10 @@
  *      Author: andriy
  */
 
-#include "../head/controller.h"
+#include "../../head/logic/controller.h"
 
-CController::CController() {
+CController::CController()
+{
 
 }
+

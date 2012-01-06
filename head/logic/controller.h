@@ -14,6 +14,9 @@
 class CController {
 public:
 	CController();
+
+private:
+
 };
 
 #endif /* CONTROLLER_H_ */
