@@ -6,7 +6,6 @@
 // Description : Hello World in C++, Ansi-style
 //============================================================================
 
-
 #include <iostream>
 #include <stdlib.h>
 #include <string.h>
@@ -20,17 +19,38 @@
 
 using namespace std;
 
-
-void init_main_window();
+CMainWindow init_main_window();
 void do_test1();
 void do_test2();
-
 
 const char* START_CMD = "start";
 const char* STOP_CMD = "stop";
 const char* POSTPONE_CMD = "postpone";
 const char* STATUS_CMD = "status";
 
+/**
+ * 开始
+ */
+void on_start_button_clicked(GtkWidget* button, gpointer userdata)
+{
+	//TODO
+}
+
+/**
+ * 终止
+ */
+void on_stop_button_clicked(GtkWidget* button, gpointer userdata)
+{
+	//TODO
+}
+
+/**
+ * 推迟
+ */
+void on_delay_button_clicked(GtkWidget* button, gpointer userdata)
+{
+	//TODO
+}
 
 int main(int argc, char** argv)
 {
@@ -41,8 +61,14 @@ int main(int argc, char** argv)
 	{
 		//=====开启GUI=====
 		gtk_init(&argc, &argv);
-		init_main_window();
-		exit(0);
+		CMainWindow mainWindow = init_main_window();
+		g_signal_connect(G_OBJECT(mainWindow.get_start_button()), "clicked",
+				G_CALLBACK(on_start_button_clicked), (gpointer)"");
+		g_signal_connect(G_OBJECT(mainWindow.get_stop_button()), "clicked",
+				G_CALLBACK(on_stop_button_clicked), (gpointer)"");
+		g_signal_connect(G_OBJECT(mainWindow.get_delay_button()), "clicked",
+				G_CALLBACK(on_delay_button_clicked), (gpointer)"");
+		gtk_main();
 		return 0;
 	}
 	case 2:
@@ -96,14 +122,12 @@ int main(int argc, char** argv)
 /**
  * 初始化主界面设置
  */
-void init_main_window() {
+CMainWindow init_main_window()
+{
 	GladeXML* ui = glade_xml_new("mainFrame.glade", NULL, NULL);
-	GtkWidget* window = glade_xml_get_widget(ui, "window");
-	gtk_widget_show_all(window);
-	gtk_main();
-	CMainWindow mainWindow(window);
+	CMainWindow mainWindow(ui);
+	return mainWindow;
 }
-
 
 /**
  * 专门用来调试的函数
