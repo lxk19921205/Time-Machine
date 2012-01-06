@@ -7,12 +7,21 @@
 
 #ifndef MAIN_WINDOW_H_
 #define MAIN_WINDOW_H_
-
+#include <glade/glade.h>
 #include <gtk/gtk.h>
 
 class CMainWindow {
+
+private:
+	GtkWidget* startButton;
+	GtkWidget* stopButton;
+	GtkWidget* delayButton;
+
 public:
-	CMainWindow(GtkWidget* window);
+	CMainWindow(GladeXML* ui);
+	GtkWidget* get_start_button();
+	GtkWidget* get_stop_button();
+	GtkWidget* get_delay_button();
 };
 
 #endif /* MAIN_WINDOW_H_ */
