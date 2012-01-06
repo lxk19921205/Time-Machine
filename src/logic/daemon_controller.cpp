@@ -42,11 +42,11 @@ void CDaemonController::init_daemon()
 	}
 	else if (pid > 0)
 	{
-		//parent
-		exit(0);
+		//parent，这里不exit，因为是从外边调的，外边可能还有事情要做
+		return;
 	}
-
 	//是child process了现在
+
 	setsid();
 
 	//确保将来的open不会分配控制着的tty
@@ -113,13 +113,11 @@ void CDaemonController::init_daemon()
 		;
 	}
 
-
-	//=====解锁完文件，可以结束了=====
-	this->unlock_file();
 	exit(0);
 }
 
 
+//=====public method=====
 bool CDaemonController::already_running()
 {
 	int fd = open(TM_LOCK_FILE, O_RDWR | O_CREAT, TM_LOCK_MODE);
@@ -146,16 +144,13 @@ bool CDaemonController::already_running()
 }
 
 
+//=====private method=====
 bool CDaemonController::lock_file()
 {
 	int fd = open(TM_LOCK_FILE, O_RDWR | O_CREAT, TM_LOCK_MODE);
 	if (fd < 0)
 	{
 		syslog(LOG_ERR, "can't open %s : %s in lock_file()", TM_LOCK_FILE, strerror(errno));
-		if (errno == EACCES)
-		{
-			cout << "Error: Permission denied, use \'sudo\' instead." << endl;
-		}
 		exit(1);
 	}
 
@@ -185,36 +180,34 @@ bool CDaemonController::lock_file()
 	char buffer[16];
 	sprintf(buffer, "%ld", (long) getpid());
 	write(fd, buffer, strlen(buffer) + 1);
-	close(fd);
+
+	//=====不需要close，否则锁就没了！进程结束自动close=====
+//	close(fd);
 
 	return true;
 }
 
 
-void CDaemonController::unlock_file()
-{
-	int fd = open(TM_LOCK_FILE, O_RDWR | O_CREAT, TM_LOCK_MODE);
-	if (fd < 0)
-	{
-		syslog(LOG_ERR, "can't open %s : %s in unlock_file()", TM_LOCK_FILE, strerror(errno));
-		if (errno == EACCES)
-		{
-			cout << "Error: Permission denied, use \'sudo\' instead." << endl;
-		}
-		exit(1);
-	}
-
-	struct flock fl;
-	fl.l_type = F_UNLCK;
-	fl.l_start = 0;
-	fl.l_whence = SEEK_SET;
-	fl.l_len = 0;
-
-	if (fcntl(fd, F_SETLK, &fl) == -1)
-	{
-		syslog(LOG_ERR, "can't unlock file %s : %s in unlock_file()", TM_LOCK_FILE, strerror(errno));
-		exit(1);
-	}
-	close(fd);
-}
+//void CDaemonController::unlock_file()
+//{
+//	int fd = open(TM_LOCK_FILE, O_RDWR | O_CREAT, TM_LOCK_MODE);
+//	if (fd < 0)
+//	{
+//		syslog(LOG_ERR, "can't open %s : %s in unlock_file()", TM_LOCK_FILE, strerror(errno));
+//		exit(1);
+//	}
+//
+//	struct flock fl;
+//	fl.l_type = F_UNLCK;
+//	fl.l_start = 0;
+//	fl.l_whence = SEEK_SET;
+//	fl.l_len = 0;
+//
+//	if (fcntl(fd, F_SETLK, &fl) == -1)
+//	{
+//		syslog(LOG_ERR, "can't unlock file %s : %s in unlock_file()", TM_LOCK_FILE, strerror(errno));
+//		exit(1);
+//	}
+//	close(fd);
+//}
 

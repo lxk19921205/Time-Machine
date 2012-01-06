@@ -24,16 +24,19 @@ public:
 	 */
 	bool already_running();
 
-//private:
+private:
 	/**
 	 * 如果返回true，说明文件可以锁，那就锁上！因此此程序是当前唯一
 	 * 否则，说明文件已被锁住，已经有另一个实例在运行了
 	 */
 	bool lock_file();
+
 	/**
 	 * 在daemon process结束的时候解锁文件
+	 * 但现在不许要unlock了，因为进程结束自动释放，而进程还在的时候释放没有意义
+	 * 所以直接关进程好了
 	 */
-	void unlock_file();
+	//void unlock_file();
 
 private:
 	static const char* TM_LOG_NAME;

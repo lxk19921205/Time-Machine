@@ -19,7 +19,8 @@ using namespace std;
 
 
 void init_main_window();
-void do_test();
+void do_test1();
+void do_test2();
 
 
 const char* START_CMD = "start";
@@ -33,7 +34,7 @@ const char* STATUS_CMD = "status";
  */
 void show_help()
 {
-	cout << "帮助：" << endl
+	cout << "帮助：  (请使用超级权限运行)" << endl
 			<< "  没有参数：启动图形界面" << endl
 			<< "  start：开始服务" << endl
 			<< "  stop: 结束服务" << endl
@@ -93,9 +94,14 @@ int main(int argc, char** argv)
 	}
 	case 2:
 	{
-		if (strcmp(argv[1], "test") == 0)
+		if (strcmp(argv[1], "test1") == 0)
 		{
-			do_test();
+			do_test1();
+			return 0;
+		}
+		if (strcmp(argv[1], "test2") == 0)
+		{
+			do_test2();
 			return 0;
 		}
 
@@ -140,17 +146,23 @@ void init_main_window() {
 /**
  * 专门用来调试的函数
  */
-void do_test()
+void do_test1()
 {
 	CDaemonController daemon;
-//	daemon.init_daemon();
+	daemon.init_daemon();
+	//daemon.unlock_file();
+	cout << "hello world" << endl;
+}
+
+void do_test2()
+{
+	CDaemonController daemon;
 	if (daemon.already_running())
 	{
-		cout << "already runnign" << endl;
+		cout << "already running" << endl;
 	}
 	else
 	{
 		cout << "not running!" << endl;
 	}
-
 }
