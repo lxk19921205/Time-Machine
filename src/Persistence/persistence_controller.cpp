@@ -33,13 +33,13 @@ int str2int(string str)
 	return num;
 }
 
-UserData analyseString(char* buff)
+void analyseString(UserData* userData, char* buff)
 {
-	UserData result;
-
 	//analyse string
 	stringstream temp(buff);
 	string sub_str;
+
+	//cut the string into specific area
 	while(getline(temp,sub_str,'\n'))
 	{
 		stringstream eachLine(sub_str);
@@ -48,25 +48,25 @@ UserData analyseString(char* buff)
 		getline(eachLine,head,':');
 		getline(eachLine,value,':');
 		if(head.compare("intervalTime") == 0)
-			result.intervalTime = str2int(value);
+			userData->intervalTime = str2int(value);
 		else if(head.compare("delayTime") == 0)
-			result.delayTime = str2int(value);
+			userData->delayTime = str2int(value);
 		else if(head.compare("lockTime") == 0)
-			result.lockTime = str2int(value);
+			userData->lockTime = str2int(value);
 		else if(head.compare("unLockTime") == 0)
-			result.unLockTime = str2int(value);
+			userData->unLockTime = str2int(value);
 		else if(head.compare("canDelay") == 0)
-			result.canDelay = str2int(value);
+			userData->canDelay = str2int(value);
 		else if(head.compare("canForceToExit") == 0)
-			result.canForceToExit = str2int(value);
+			userData->canForceToExit = str2int(value);
 		else if(head.compare("ifBeep") == 0)
-			result.ifBeep = str2int(value);
+			userData->ifBeep = str2int(value);
 		else if(head.compare("ifCloseScreen") == 0)
-			result.ifCloseScreen = str2int(value);
+			userData->ifCloseScreen = str2int(value);
 		else if(head.compare("ifStartWithPower") == 0)
-			result.ifStartWithPower = str2int(value);
+			userData->ifStartWithPower = str2int(value);
 		else if(head.compare("ifStopTiming") == 0)
-			result.ifStopTiming = str2int(value);
+			userData->ifStopTiming = str2int(value);
 		else if(head.compare("userLevel") == 0)
 		{
 			int userLevel = str2int(value);
@@ -78,10 +78,9 @@ UserData analyseString(char* buff)
 			else if(userLevel == 2)
 				t = force;
 
-			result.userLevel = t;
+			userData->userLevel = t;
 		}
 	}
-	return result;
 }
 
 void PersistenceController::readUserData(UserData* userData)
@@ -98,7 +97,7 @@ void PersistenceController::readUserData(UserData* userData)
 		cout <<"read file failed!"<< endl;
 	}
 
-	*userData = analyseString(buff);
+	analyseString(userData, buff);
 
 	close(fd);
 }
