@@ -10,7 +10,6 @@
 
 #include <fcntl.h>
 
-
 class CDaemonController
 {
 public:
@@ -42,6 +41,7 @@ private:
 	static const char* TM_LOG_NAME;
 	static const char* TM_LOCK_FILE;
 	static mode_t TM_LOCK_MODE;
+
 };
 
 
