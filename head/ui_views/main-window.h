@@ -15,6 +15,7 @@ public:
 	CMainWindow(GtkWidget* window);
 private:
 	void AddBackGroundImage(GtkWidget* window);
+	void AddHorizontalScrollBar(GtkWidget* panel);
 };
 
 #endif /* MAIN_WINDOW_H_ */
