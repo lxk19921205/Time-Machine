@@ -14,6 +14,7 @@
 #include <glade/glade.h>
 
 #include "./../head/ui_views/main-window.h"
+#include "./../head/ui_views/setting-window.h"
 #include "../head/logic/daemon_controller.h"
 #include "../head/logic/controller.h"
 
@@ -126,8 +127,7 @@ CMainWindow init_main_window()
 {
 	GladeXML* ui = glade_xml_new("mainFrame.glade", NULL, NULL);
 	CMainWindow mainWindow(ui);
-	GtkWidget* window = glade_xml_get_widget(ui, "settingWindow");
-	gtk_widget_show_all(window);
+	CSettingWindow settingWindow(ui);
 	return mainWindow;
 }
 
