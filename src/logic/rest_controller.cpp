@@ -101,6 +101,9 @@ void CRestController::start_waiting()
 			interval.tv_sec *= 0.8;
 		}
 
+		//TODO 应该改为每隔1秒，醒过来一次，判断一下到了没有，这样可以知道还有多久
+		//但是数据写在哪里呢？
+
 		struct itimerval value;
 		value.it_interval = interval;
 		value.it_value = interval;
@@ -120,7 +123,7 @@ bool CRestController::is_night()
 	//TODO
 //	struct timeval tv;
 //	gettimeofday(&tv, NULL);
-	return true;
+	return false;
 }
 
 
@@ -137,7 +140,20 @@ void CRestController::do_rest()
 	}
 	this->set_alt_enable(false);
 
-	//TODO 黑屏
+	pid_t pid = fork();
+	if (pid < 0)
+	{
+		syslog(LOG_ERR, "fork error in do_rest()");
+		exit(1);
+	}
+	else if (pid == 0)
+	{
+		//TODO 黑屏
+
+		exit(0);
+	}
+	int status;
+	wait(&status);
 
 	this->set_alt_enable(true);
 	MusicController::end_music();

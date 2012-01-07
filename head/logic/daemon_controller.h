@@ -19,7 +19,6 @@ public:
 	~CDaemonController();
 
 	virtual void init_process();
-	void kill_rest_child();
 
 private:
 	/**

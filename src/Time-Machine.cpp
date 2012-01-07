@@ -171,12 +171,8 @@ void init_main_window()
 void do_test1()
 {
 	CDaemonController daemon;
-//	daemon.init_process();
-	//daemon.unlock_file();
-//	cout << "hello world" << endl;
-
 	CRestController rest;
-	rest.set_alt_enable(false);
+	CWhipController whip;
 }
 
 void do_test2()
@@ -184,10 +180,4 @@ void do_test2()
 	CDaemonController daemon;
 	CRestController rest;
 	CWhipController whip;
-	rest.set_alt_enable(true);
-//	rest.turn_off_screen();
-//	cout << "daemon pid:  " << daemon.get_unique_pid() << endl
-//			<< "rest pid: " << rest.get_unique_pid() << endl
-//			<< "whip pid: " << whip.get_unique_pid() << endl;
-	//kill(daemon.get_unique_pid(), SIGUSR1);
 }

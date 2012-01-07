@@ -11,6 +11,8 @@
 
 #include "../../head/logic/controller.h"
 #include "../../head/logic/daemon_controller.h"
+#include "../../head/logic/rest_controller.h"
+#include "../../head/logic/whip_controller.h"
 
 using namespace std;
 
@@ -57,7 +59,16 @@ void CController::postpone_rest()
 void CController::show_status()
 {
 	//TODO
-	cout << "show status" << endl;
+	CDaemonController daemon;
+	if (daemon.already_running())
+	{
+		cout << "时光机正在运行" << endl;
+		CRestController rest;
+	}
+	else
+	{
+		cout << "时光机正在休息" << endl;
+	}
 }
 
 

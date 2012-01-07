@@ -140,12 +140,12 @@ static void signal_handler(int signum, siginfo_t *info, void* context)
 		CRestController rest;
 		CWhipController whip;
 		pid_t rpid = rest.get_unique_pid();
-		pid_t wpid = whip.get_unique_pid();
 		if (rpid != -1)
 		{
 			kill(rpid, SIGKILL);
 			waitpid(rpid, NULL, 0);
 		}
+		pid_t wpid = whip.get_unique_pid();
 		if (wpid != -1)
 		{
 			kill(wpid, SIGKILL);
@@ -165,14 +165,3 @@ void CDaemonController::set_signal()
 	sigaction(SIG_STOP_ALL, &sa, NULL);
 }
 
-
-
-
-void CDaemonController::kill_rest_child()
-{
-//	int status;
-//	syslog(LOG_INFO, "try to kill rest_child %d", rest_pid);
-//	kill(rest_pid, SIGKILL);
-//	wait(&status);
-	//TODO
-}
