@@ -67,7 +67,9 @@ void CController::show_help()
 			<< "  没有参数：启动图形界面" << endl
 			<< "  start：开始服务" << endl
 			<< "  stop: 结束服务" << endl
-			<< "  postpone：推迟休息" << endl;
+			<< "  postpone：推迟休息" << endl
+			<< "  rest：立即休息" << endl
+			<< "  status：显示休息数据" << endl;
 }
 
 void CController::rest_now()
