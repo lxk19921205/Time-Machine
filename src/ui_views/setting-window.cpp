@@ -64,7 +64,7 @@ UserData CSettingWindow::get_user_data()
 
 	string intervalEntryText = gtk_entry_get_text(intervalEntry);
 	int intervalTime = atoi(intervalEntryText.c_str());
-	m_data.intervalTime = intervalTime;
+	m_data.restIntervalTime = intervalTime;
 
 	string lastEntryText = gtk_entry_get_text(lastEntry);
 	int lockTime = atoi(lastEntryText.c_str());
@@ -76,14 +76,14 @@ UserData CSettingWindow::get_user_data()
 
 	string delayEntryText = gtk_entry_get_text(delayEntry);
 	int delayTime = atoi(delayEntryText.c_str());
-	m_data.delayTime = delayTime;
+//	m_data.delayTime = delayTime;
 
 	bool ifStartWithPower = gtk_toggle_button_get_active(
 			&(ifStartWithPowerCheck->toggle_button));
 	m_data.ifStartWithPower = ifStartWithPower;
 
 	bool ifBeep = gtk_toggle_button_get_active(&(ifBeepCheck->toggle_button));
-	m_data.ifBeep = ifBeep;
+//	m_data.ifBeep = ifBeep;
 
 	bool ifShutScreen = gtk_toggle_button_get_active(
 			&(ifShutScreenCheck->toggle_button));
@@ -95,7 +95,7 @@ UserData CSettingWindow::get_user_data()
 
 	bool ifStopTiming = gtk_toggle_button_get_active(
 			&(ifStopTimingCheck->toggle_button));
-	m_data.ifStopTiming = ifStopTiming;
+//	m_data.ifStopTiming = ifStopTiming;
 
 	bool ifCanDelay = gtk_toggle_button_get_active(
 			&(ifCanDelayCheck->toggle_button));

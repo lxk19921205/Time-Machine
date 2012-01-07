@@ -86,7 +86,7 @@ void CRestController::start_waiting()
 	while (true)
 	{
 		struct timeval interval;
-		interval.tv_sec = setting.intervalTime * 60;
+		interval.tv_sec = setting.restIntervalTime * 60;
 		interval.tv_usec = 0;
 
 		//TODO testing
@@ -112,10 +112,13 @@ void CRestController::do_rest()
 	//TODO 黑屏、放歌、锁键盘
 
 	//TODO BEEP
+
 	if (setting.ifCloseScreen)
 	{
 		this->turn_off_screen();
 	}
+
+
 }
 
 void CRestController::turn_off_screen()
