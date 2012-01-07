@@ -30,13 +30,15 @@ void CWhipController::init_process()
 		syslog(LOG_ERR, "fork error in init_whip_child()");
 		return;
 	}
-	else if (pid == 0)
+	else if (pid >= 0)
 	{
-		//child
-		this->start_waiting();
-		exit(0);
+		//parent
+		return;
 	}
-	return;
+
+	//child
+	this->start_waiting();
+	exit(0);
 }
 
 void CWhipController::start_waiting()

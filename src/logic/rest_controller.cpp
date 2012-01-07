@@ -10,6 +10,7 @@
 #include <stdlib.h>
 
 #include "../../head/logic/rest_controller.h"
+#include "../../head/Persistence/persistence_controller.h"
 
 
 CRestController::CRestController()
@@ -31,14 +32,15 @@ void CRestController::init_process()
 		syslog(LOG_ERR, "fork error in init_rest_child()");
 		return;
 	}
-	else if (pid == 0)
+	else if (pid > 0)
 	{
-		//child
-		this->start_waiting();
-		exit(0);
+		//parent
+		return;
 	}
-	return;
 
+	//child
+	this->start_waiting();
+	exit(0);
 }
 
 void CRestController::start_waiting()
