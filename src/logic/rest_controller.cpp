@@ -12,6 +12,8 @@
 #include <string.h>
 #include <signal.h>
 #include <sys/time.h>
+#include <sys/types.h>
+#include <sys/wait.h>
 
 #include <iostream>
 
@@ -135,5 +137,25 @@ void CRestController::turn_off_screen()
 		sleep(1);
 		execlp("xset","", "dpms", "force", "off", NULL);
 		exit(0);
+	}
+}
+
+
+void CRestController::set_alt_enable(bool enabled)
+{
+	if (enabled)
+	{
+		system("xmodmap -e 'keycode 64 = Alt_L Meta_L'");
+		system("xmodmap -e 'keycode 108 = Alt_R Meta_R'");
+		system("xmodmap -e 'add mod1 = Alt_L Alt_R Meta_L Meta_R'");
+
+		//=====多一行，只是因为让add产生作用，不延迟，具体看文档～=====
+		system("xmodmap -e 'keycode 64 = Alt_L Meta_L'");
+	}
+	else
+	{
+		system("xmodmap -e 'clear mod1'");
+		system("xmodmap -e 'keycode 64 = a A'");
+		system("xmodmap -e 'keycode 108 = b B'");
 	}
 }

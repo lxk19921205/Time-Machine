@@ -20,6 +20,8 @@
 #include "../head/logic/rest_controller.h"
 #include "../head/logic/whip_controller.h"
 
+#include <signal.h>
+
 using namespace std;
 
 void init_main_window();
@@ -35,6 +37,7 @@ const char* REST_CMD = "rest";
 CMainWindow* mainWindow;
 CSettingWindow* settingWindow;
 
+
 /**
  * 开始
  */
@@ -43,6 +46,13 @@ void on_start_button_clicked(GtkWidget* button, gpointer userdata)
 	//TODO
 	gtk_window_fullscreen(mainWindow->get_main_window());
 	gtk_window_set_keep_above(GTK_WINDOW(mainWindow->get_main_window()),TRUE);
+
+
+//	struct sigaction sa;
+//	sigemptyset(&sa.sa_mask);
+//	sa.sa_flags = 0;
+//	sa.sa_handler = SIG_IGN;
+//	sigaction(SIGINT, &sa, NULL);
 }
 
 /**
@@ -161,9 +171,12 @@ void init_main_window()
 void do_test1()
 {
 	CDaemonController daemon;
-	daemon.init_process();
+//	daemon.init_process();
 	//daemon.unlock_file();
-	cout << "hello world" << endl;
+//	cout << "hello world" << endl;
+
+	CRestController rest;
+	rest.set_alt_enable(false);
 }
 
 void do_test2()
@@ -171,7 +184,8 @@ void do_test2()
 	CDaemonController daemon;
 	CRestController rest;
 	CWhipController whip;
-	rest.turn_off_screen();
+	rest.set_alt_enable(true);
+//	rest.turn_off_screen();
 //	cout << "daemon pid:  " << daemon.get_unique_pid() << endl
 //			<< "rest pid: " << rest.get_unique_pid() << endl
 //			<< "whip pid: " << whip.get_unique_pid() << endl;
