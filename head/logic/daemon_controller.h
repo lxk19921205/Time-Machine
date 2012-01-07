@@ -28,9 +28,7 @@ private:
 	 * 所以直接关进程好了
 	 */
 	//void unlock_file();
-	/**
-	 * 关联signal
-	 */
+
 	void set_signal();
 
 private:

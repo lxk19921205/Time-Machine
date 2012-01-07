@@ -26,8 +26,12 @@ public:
 	 */
 	void start_waiting();
 
+	/**
+	 * 激励！
+	 */
+	void do_whip();
 private:
-
+	void set_signal();
 };
 
 

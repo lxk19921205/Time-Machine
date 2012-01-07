@@ -52,6 +52,11 @@ protected:
 	 * 否则，说明文件已被锁住，已经有另一个实例在运行了
 	 */
 	virtual bool lock_file();
+
+	/**
+	 * 关联相关的信号处理
+	 */
+	virtual void set_signal() = 0;
 };
 
 
