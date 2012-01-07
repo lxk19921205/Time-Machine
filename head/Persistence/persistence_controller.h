@@ -9,10 +9,11 @@
 #define PERSISTENCE_CONTROLLER
 
 #include <fcntl.h>
-#include <string.h>
+#include <string>
 using namespace std;
 
-enum level{
+enum level
+{
 	//=====只提醒，因为用户自制力很强=====
 	remind,
 
@@ -26,7 +27,8 @@ enum level{
 /**
  * use for store user data
  */
-struct UserData {
+struct UserData
+{
 	//=====休息间隔 单位：分钟=====
 	int intervalTime;
 
@@ -79,7 +81,8 @@ struct UserData {
 /**
  * use for store user_data
  */
-class PersistenceController {
+class PersistenceController
+{
 public:
 	//=====读用户数据文件=====
 	void readUserData(UserData* data);

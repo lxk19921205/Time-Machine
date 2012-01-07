@@ -10,12 +10,19 @@
 
 #include <glade/glade.h>
 #include <gtk/gtk.h>
+#include "../Persistence/persistence_controller.h"
 
 class CSettingWindow
 {
-
+private:
+	UserData m_data;
+private:
+	GtkHScrollbar* levelHScrollbar;
+	GtkWidget* saveButton;
 public:
 	CSettingWindow(GladeXML* ui);
+	GtkWidget* get_save_button();
+	UserData get_user_data();
 };
 
 
