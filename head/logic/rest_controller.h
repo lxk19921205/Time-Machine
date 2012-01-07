@@ -33,7 +33,7 @@ public:
 	void do_rest();
 
 private:
-	bool go_on_waiting;
+	void set_signal();
 };
 
 

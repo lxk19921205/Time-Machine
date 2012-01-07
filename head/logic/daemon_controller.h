@@ -10,6 +10,8 @@
 
 #include "abstract_process_controller.h"
 
+#define SIG_STOP_ALL SIGUSR1
+
 class CDaemonController : public CAbsProcController
 {
 public:
@@ -26,6 +28,10 @@ private:
 	 * 所以直接关进程好了
 	 */
 	//void unlock_file();
+	/**
+	 * 关联signal
+	 */
+	void set_signal();
 
 private:
 	static const char* TM_LOG_NAME;

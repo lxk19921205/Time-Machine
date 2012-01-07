@@ -9,6 +9,7 @@
 #define ABSTRACT_PROCESS_CONTROLLER_H_
 
 #include <fcntl.h>
+#include "../Persistence/persistence_controller.h"
 
 /**
  * 继承它的都是一些全局唯一的process，
@@ -35,9 +36,16 @@ public:
 	 */
 	virtual void init_process() = 0;
 
+	/**
+	 * 重新从文件里读取setting
+	 */
+	void read_setting();
+
 protected:
 	const char* TM_LOCK_FILE;
 	static mode_t TM_LOCK_MODE;
+
+	UserData setting;
 
 	/**
 	 * 如果返回true，说明文件可以锁，那就锁上！因此此程序是当前唯一
