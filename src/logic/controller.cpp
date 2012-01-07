@@ -63,13 +63,13 @@ void CController::show_status()
 
 void CController::show_help()
 {
-	cout << "帮助：  (请使用超级权限运行)" << endl
+	cout << "帮助：  (===请使用超级权限运行===)" << endl
 			<< "  没有参数：启动图形界面" << endl
 			<< "  start：开始服务" << endl
 			<< "  stop: 结束服务" << endl
-			<< "  postpone：推迟休息" << endl
-			<< "  rest：立即休息" << endl
-			<< "  status：显示休息数据" << endl;
+			<< "  postpone：推迟休息（敬请期待）" << endl
+			<< "  rest：立即休息（敬请期待）" << endl
+			<< "  status：显示休息数据（敬请期待）" << endl;
 }
 
 void CController::rest_now()
