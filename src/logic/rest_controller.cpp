@@ -19,6 +19,7 @@
 
 #include "../../head/logic/rest_controller.h"
 #include "../../head/Persistence/persistence_controller.h"
+#include "../../head/logic/music_controller.h"
 
 using namespace std;
 
@@ -114,13 +115,16 @@ void CRestController::do_rest()
 	//TODO 黑屏、放歌、锁键盘
 
 	//TODO BEEP
+	MusicController::play_music("hello world");
 
 	if (setting.ifCloseScreen)
 	{
 		this->turn_off_screen();
 	}
 
+	//TODO 黑屏
 
+	MusicController::end_music();
 }
 
 void CRestController::turn_off_screen()

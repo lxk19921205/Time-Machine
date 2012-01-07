@@ -31,7 +31,8 @@ void initPlayer(){
 
 void MusicController::play_music(gchar* file)
 {
-/*	initPlayer();
+/*	TODO
+ 	initPlayer();
 
 	//get the state of music
 	//GstState state;
@@ -79,7 +80,7 @@ void MusicController::play_music(gchar* file)
 
 void MusicController::end_music()
 {
-/*
+/*	TODO
 	//quit the music loop
 	g_main_loop_quit(loop);
 

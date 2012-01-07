@@ -8,6 +8,8 @@
 #ifndef MUSIC_CONTROLLER_H_
 #define MUSIC_CONTROLLER_H_
 
+#include <gst/gst.h>
+
 class MusicController
 {
 private:
