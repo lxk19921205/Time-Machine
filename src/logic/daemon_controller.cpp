@@ -26,10 +26,8 @@ using namespace std;
 
 const char* CDaemonController::TM_LOG_NAME = "-----Time Machine d-----";
 const char* CDaemonController::TM_LOCK_FILE = "/var/run/TimeMachine.pid";
-mode_t CDaemonController::TM_LOCK_MODE = (S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+mode_t CDaemonController::TM_LOCK_MODE = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;
 
-pid_t CDaemonController::rest_pid = -2;
-pid_t CDaemonController::whip_pid = -2;
 
 void CDaemonController::init_daemon()
 {
@@ -114,6 +112,8 @@ void CDaemonController::init_daemon()
 	this->init_rest_child();
 	this->init_whip_child();
 
+	//TODO sigaction，处理SIGUSER1，结束all
+
 	while(true)
 	{
 		pause();
@@ -140,7 +140,7 @@ void CDaemonController::init_rest_child()
 		//child
 		close(fds[0]);
 		pid_t child_pid = getpid();
-		write(fds[1], &child_pid, sizeof(pid_t));
+//		write(fds[1], &child_pid, sizeof(pid_t));
 
 		CRestController restController;
 		restController.start_waiting();
@@ -150,8 +150,8 @@ void CDaemonController::init_rest_child()
 	{
 		//parent
 		close(fds[1]);
-		read(fds[0], &rest_pid, sizeof(pid_t));
-		syslog(LOG_INFO, "rest_pid %d", rest_pid);
+//		read(fds[0], &rest_pid, sizeof(pid_t));
+//		syslog(LOG_INFO, "rest_pid %d", rest_pid);
 		return;
 	}
 }
@@ -173,7 +173,7 @@ void CDaemonController::init_whip_child()
 		//child
 		close(fds[0]);
 		pid_t child_pid = getpid();
-		write(fds[1], &child_pid, sizeof(pid_t));
+//		write(fds[1], &child_pid, sizeof(pid_t));
 
 		CWhipController whipController;
 		whipController.start_waiting();
@@ -183,7 +183,7 @@ void CDaemonController::init_whip_child()
 	{
 		//parent
 		close(fds[1]);
-		read(fds[0], &whip_pid, sizeof(pid_t));
+//		read(fds[0], &whip_pid, sizeof(pid_t));
 //		syslog(LOG_INFO, "whip_pid %d", whip_pid);
 		return;
 	}
@@ -191,10 +191,11 @@ void CDaemonController::init_whip_child()
 
 void CDaemonController::kill_rest_child()
 {
-	int status;
-	syslog(LOG_INFO, "try to kill rest_child %d", rest_pid);
-	kill(rest_pid, SIGKILL);
-	wait(&status);
+//	int status;
+//	syslog(LOG_INFO, "try to kill rest_child %d", rest_pid);
+//	kill(rest_pid, SIGKILL);
+//	wait(&status);
+	//TODO
 }
 
 //=====public method=====

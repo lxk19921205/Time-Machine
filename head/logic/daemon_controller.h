@@ -48,15 +48,6 @@ private:
 	static mode_t TM_LOCK_MODE;
 
 	/**
-	 * 检测休息的子进程pid
-	 */
-	static pid_t rest_pid;
-	/**
-	 * 检测激励的子进程pid
-	 */
-	static pid_t whip_pid;
-
-	/**
 	 * 初始化检测休息子进程
 	 */
 	void init_rest_child();
