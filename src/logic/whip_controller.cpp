@@ -21,7 +21,7 @@ CWhipController::~CWhipController()
 
 void CWhipController::start_waiting()
 {
-	this->start_waiting();
+	this->lock_file();
 	while (true)
 	{
 		pause();

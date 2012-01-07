@@ -29,6 +29,7 @@ CAbsProcController::~CAbsProcController()
 
 pid_t CAbsProcController::get_unique_pid()
 {
+	syslog(LOG_INFO, "start to get pid of %s", TM_LOCK_FILE);
 	int fd = open(TM_LOCK_FILE, O_RDONLY, TM_LOCK_MODE);
 	if (fd < 0)
 	{
@@ -62,6 +63,7 @@ bool CAbsProcController::already_running()
 
 bool CAbsProcController::lock_file()
 {
+	syslog(LOG_INFO, "start to lock file of %s", TM_LOCK_FILE);
 	int fd = open(TM_LOCK_FILE, O_RDWR | O_CREAT, TM_LOCK_MODE);
 	if (fd < 0)
 	{
