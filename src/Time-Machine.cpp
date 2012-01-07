@@ -128,6 +128,7 @@ CMainWindow init_main_window()
 	GladeXML* ui = glade_xml_new("mainFrame.glade", NULL, NULL);
 	CMainWindow mainWindow(ui);
 	CSettingWindow settingWindow(ui);
+	settingWindow.get_user_data();
 	return mainWindow;
 }
 

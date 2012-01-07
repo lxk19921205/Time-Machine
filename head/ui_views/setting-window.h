@@ -19,6 +19,10 @@ private:
 private:
 	GtkHScrollbar* levelHScrollbar;
 	GtkWidget* saveButton;
+	GtkEntry* intervalEntry;
+	GtkEntry* lastEntry;
+	GtkEntry* pauseEntry;
+	GtkEntry* delayEntry;
 public:
 	CSettingWindow(GladeXML* ui);
 	GtkWidget* get_save_button();
