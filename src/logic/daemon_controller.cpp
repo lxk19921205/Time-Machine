@@ -133,10 +133,26 @@ void CDaemonController::init_process()
 }
 
 
-static void signal_handler(int signo, siginfo_t *info, void* context)
+static void signal_handler(int signum, siginfo_t *info, void* context)
 {
-	//TODO
-	syslog(LOG_INFO, "signal handler caught it!!!");
+	if (signum == SIG_STOP_ALL)
+	{
+		CRestController rest;
+		CWhipController whip;
+		pid_t rpid = rest.get_unique_pid();
+		pid_t wpid = whip.get_unique_pid();
+		if (rpid != -1)
+		{
+			kill(rpid, SIGKILL);
+			waitpid(rpid, NULL, 0);
+		}
+		if (wpid != -1)
+		{
+			kill(wpid, SIGKILL);
+			waitpid(wpid, NULL, 0);
+		}
+		exit(0);
+	}
 }
 
 

@@ -95,6 +95,12 @@ void CRestController::start_waiting()
 		//TODO testing
 		interval.tv_sec = 10;
 
+		//=====白天长一点，晚上短一点=====
+		if (this->is_night())
+		{
+			interval.tv_sec *= 0.8;
+		}
+
 		struct itimerval value;
 		value.it_interval = interval;
 		value.it_value = interval;
@@ -109,6 +115,14 @@ void CRestController::start_waiting()
 	}
 }
 
+bool CRestController::is_night()
+{
+	//TODO
+//	struct timeval tv;
+//	gettimeofday(&tv, NULL);
+	return true;
+}
+
 
 void CRestController::do_rest()
 {
@@ -121,9 +135,11 @@ void CRestController::do_rest()
 	{
 		this->turn_off_screen();
 	}
+	this->set_alt_enable(false);
 
 	//TODO 黑屏
 
+	this->set_alt_enable(true);
 	MusicController::end_music();
 }
 

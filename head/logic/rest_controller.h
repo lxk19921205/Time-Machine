@@ -41,6 +41,11 @@ private:
 	void set_signal();
 
 	/**
+	 * 判断现在是不是晚上 22:00 ~ 6:00
+	 */
+	bool is_night();
+
+	/**
 	 * 设置是否可以alt，比如alt+f4，用来休息的时候避免被关掉，及移开tty
 	 * 通过xmodmap的方法设置的
 	 */

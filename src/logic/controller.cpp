@@ -6,24 +6,44 @@
  */
 
 #include <iostream>
+#include <signal.h>
+#include <sys/wait.h>
 
 #include "../../head/logic/controller.h"
+#include "../../head/logic/daemon_controller.h"
 
 using namespace std;
 
 void CController::start_service()
 {
-	//	CDaemonController daemon_controller;
-	//	daemon_controller.init_daemon();
-	//TODO
-	cout << "start service" << endl;
+	CDaemonController daemon;
+	if (daemon.already_running())
+	{
+		cout << "时光机已经在运行了哦" << endl;
+	}
+	else
+	{
+		daemon.init_process();
+		cout << "时光机开始运行！" << endl;
+	}
 }
 
 
 void CController::stop_service()
 {
-	//TODO
-	cout << "stop service" << endl;
+	CDaemonController daemon;
+	pid_t pid = daemon.get_unique_pid();
+	if (pid != -1)
+	{
+		kill(pid, SIGUSR1);
+		int status;
+		waitpid(pid, &status, 0);
+		cout << "这么快就结束了啊..." << endl;
+	}
+	else
+	{
+		cout << "时光机还没有运行呢" << endl;
+	}
 }
 
 
