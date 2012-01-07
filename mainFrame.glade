@@ -454,7 +454,7 @@
                       </packing>
                     </child>
                     <child>
-                      <widget class="GtkCheckButton" id="checkbutton1">
+                      <widget class="GtkCheckButton" id="ifStartWithPowerCheck">
                         <property name="label" translatable="yes">开机启动</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
@@ -503,7 +503,7 @@
                       </packing>
                     </child>
                     <child>
-                      <widget class="GtkCheckButton" id="checkbutton2">
+                      <widget class="GtkCheckButton" id="ifBeepCheck">
                         <property name="label" translatable="yes">是否响铃</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
@@ -552,7 +552,7 @@
                       </packing>
                     </child>
                     <child>
-                      <widget class="GtkCheckButton" id="checkbutton3">
+                      <widget class="GtkCheckButton" id="ifShutScreenCheck">
                         <property name="label" translatable="yes">是否关闭屏幕</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
@@ -601,7 +601,7 @@
                       </packing>
                     </child>
                     <child>
-                      <widget class="GtkCheckButton" id="checkbutton4">
+                      <widget class="GtkCheckButton" id="ifForceExitCheck">
                         <property name="label" translatable="yes">可否强行退出</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
@@ -620,6 +620,104 @@
                     <property name="expand">True</property>
                     <property name="fill">True</property>
                     <property name="position">3</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="GtkVBox" id="vbox17">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <child>
+                      <widget class="GtkHSeparator" id="hseparator9">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                      </widget>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <widget class="GtkLabel" id="label24">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="label" translatable="yes">全屏计时</property>
+                      </widget>
+                      <packing>
+                        <property name="expand">True</property>
+                        <property name="fill">True</property>
+                        <property name="position">1</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <widget class="GtkCheckButton" id="ifStopTimingCheck">
+                        <property name="label" translatable="yes">是否可暂停</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="receives_default">False</property>
+                        <property name="use_action_appearance">False</property>
+                        <property name="draw_indicator">True</property>
+                      </widget>
+                      <packing>
+                        <property name="expand">True</property>
+                        <property name="fill">True</property>
+                        <property name="position">2</property>
+                      </packing>
+                    </child>
+                  </widget>
+                  <packing>
+                    <property name="expand">True</property>
+                    <property name="fill">True</property>
+                    <property name="position">4</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="GtkVBox" id="vbox18">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <child>
+                      <widget class="GtkHSeparator" id="hseparator10">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                      </widget>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <widget class="GtkLabel" id="label25">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="label" translatable="yes">推迟设置</property>
+                      </widget>
+                      <packing>
+                        <property name="expand">True</property>
+                        <property name="fill">True</property>
+                        <property name="position">1</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <widget class="GtkCheckButton" id="ifCanDelayCheck">
+                        <property name="label" translatable="yes">是否推迟</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="receives_default">False</property>
+                        <property name="use_action_appearance">False</property>
+                        <property name="draw_indicator">True</property>
+                      </widget>
+                      <packing>
+                        <property name="expand">True</property>
+                        <property name="fill">True</property>
+                        <property name="position">2</property>
+                      </packing>
+                    </child>
+                  </widget>
+                  <packing>
+                    <property name="expand">True</property>
+                    <property name="fill">True</property>
+                    <property name="position">5</property>
                   </packing>
                 </child>
               </widget>
@@ -643,12 +741,24 @@
                       <widget class="GtkLabel" id="label15">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="label" translatable="yes">音乐设置</property>
+                        <property name="label" translatable="yes">休息时音乐设置</property>
                       </widget>
                       <packing>
                         <property name="expand">True</property>
                         <property name="fill">True</property>
                         <property name="position">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <widget class="GtkLabel" id="label26">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="label" translatable="yes">激励音乐设置</property>
+                      </widget>
+                      <packing>
+                        <property name="expand">True</property>
+                        <property name="fill">True</property>
+                        <property name="position">1</property>
                       </packing>
                     </child>
                     <child>
@@ -660,7 +770,7 @@
                       <packing>
                         <property name="expand">True</property>
                         <property name="fill">True</property>
-                        <property name="position">1</property>
+                        <property name="position">2</property>
                       </packing>
                     </child>
                     <child>
@@ -672,7 +782,19 @@
                       <packing>
                         <property name="expand">True</property>
                         <property name="fill">True</property>
-                        <property name="position">2</property>
+                        <property name="position">3</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <widget class="GtkLabel" id="label27">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="label" translatable="yes">激励文字</property>
+                      </widget>
+                      <packing>
+                        <property name="expand">True</property>
+                        <property name="fill">True</property>
+                        <property name="position">4</property>
                       </packing>
                     </child>
                   </widget>
@@ -688,7 +810,7 @@
                     <property name="can_focus">False</property>
                     <property name="homogeneous">True</property>
                     <child>
-                      <widget class="GtkFileChooserButton" id="filechooserbutton1">
+                      <widget class="GtkFileChooserButton" id="restMusicPath">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                       </widget>
@@ -699,7 +821,7 @@
                       </packing>
                     </child>
                     <child>
-                      <widget class="GtkFileChooserButton" id="filechooserbutton2">
+                      <widget class="GtkFileChooserButton" id="whipMusicPath">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                       </widget>
@@ -710,7 +832,36 @@
                       </packing>
                     </child>
                     <child>
-                      <widget class="GtkEntry" id="entry5">
+                      <widget class="GtkFileChooserButton" id="imagePath">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="show_hidden">True</property>
+                      </widget>
+                      <packing>
+                        <property name="expand">True</property>
+                        <property name="fill">True</property>
+                        <property name="position">2</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <widget class="GtkEntry" id="commandLineEntry">
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="invisible_char">•</property>
+                        <property name="invisible_char_set">True</property>
+                        <property name="primary_icon_activatable">False</property>
+                        <property name="secondary_icon_activatable">False</property>
+                        <property name="primary_icon_sensitive">True</property>
+                        <property name="secondary_icon_sensitive">True</property>
+                      </widget>
+                      <packing>
+                        <property name="expand">True</property>
+                        <property name="fill">True</property>
+                        <property name="position">3</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <widget class="GtkEntry" id="whipTextEntry">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="invisible_char">•</property>
@@ -722,7 +873,7 @@
                       <packing>
                         <property name="expand">True</property>
                         <property name="fill">True</property>
-                        <property name="position">2</property>
+                        <property name="position">4</property>
                       </packing>
                     </child>
                   </widget>

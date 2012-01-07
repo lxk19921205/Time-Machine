@@ -20,7 +20,7 @@
 
 using namespace std;
 
-CMainWindow init_main_window();
+void init_main_window();
 void do_test1();
 void do_test2();
 
@@ -29,6 +29,7 @@ const char* STOP_CMD = "stop";
 const char* POSTPONE_CMD = "postpone";
 const char* STATUS_CMD = "status";
 
+CMainWindow* mainWindow;
 CSettingWindow* settingWindow;
 
 /**
@@ -37,6 +38,8 @@ CSettingWindow* settingWindow;
 void on_start_button_clicked(GtkWidget* button, gpointer userdata)
 {
 	//TODO
+	gtk_window_fullscreen(mainWindow->get_main_window());
+	gtk_window_set_keep_above(GTK_WINDOW(mainWindow->get_main_window()),TRUE);
 }
 
 /**
@@ -72,12 +75,12 @@ int main(int argc, char** argv)
 	{
 		//=====开启GUI=====
 		gtk_init(&argc, &argv);
-		CMainWindow mainWindow = init_main_window();
-		g_signal_connect(G_OBJECT(mainWindow.get_start_button()), "clicked",
+		init_main_window();
+		g_signal_connect(G_OBJECT(mainWindow->get_start_button()), "clicked",
 				G_CALLBACK(on_start_button_clicked), (gpointer)"");
-		g_signal_connect(G_OBJECT(mainWindow.get_stop_button()), "clicked",
+		g_signal_connect(G_OBJECT(mainWindow->get_stop_button()), "clicked",
 				G_CALLBACK(on_stop_button_clicked), (gpointer)"");
-		g_signal_connect(G_OBJECT(mainWindow.get_delay_button()), "clicked",
+		g_signal_connect(G_OBJECT(mainWindow->get_delay_button()), "clicked",
 				G_CALLBACK(on_delay_button_clicked), (gpointer)"");
 
 		g_signal_connect(G_OBJECT(settingWindow->get_save_button()), "clicked",
@@ -136,12 +139,11 @@ int main(int argc, char** argv)
 /**
  * 初始化主界面设置
  */
-CMainWindow init_main_window()
+void init_main_window()
 {
 	GladeXML* ui = glade_xml_new("mainFrame.glade", NULL, NULL);
-	CMainWindow mainWindow(ui);
+	mainWindow = new CMainWindow(ui);
 	settingWindow = new CSettingWindow(ui);
-	return mainWindow;
 }
 
 /**

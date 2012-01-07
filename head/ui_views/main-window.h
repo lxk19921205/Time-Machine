@@ -13,12 +13,15 @@
 class CMainWindow {
 
 private:
+	GtkWindow* window;
 	GtkWidget* startButton;
 	GtkWidget* stopButton;
 	GtkWidget* delayButton;
 
 public:
 	CMainWindow(GladeXML* ui);
+
+	GtkWindow* get_main_window();
 	GtkWidget* get_start_button();
 	GtkWidget* get_stop_button();
 	GtkWidget* get_delay_button();
