@@ -17,6 +17,8 @@
 #include "./../head/ui_views/setting-window.h"
 #include "../head/logic/daemon_controller.h"
 #include "../head/logic/controller.h"
+#include "../head/logic/rest_controller.h"
+#include "../head/logic/whip_controller.h"
 
 using namespace std;
 
@@ -160,6 +162,9 @@ void do_test1()
 void do_test2()
 {
 	CDaemonController daemon;
-//	cout << "pid:  " << daemon.get_unique_pid() << endl;
-	daemon.kill_rest_child();
+	CRestController rest;
+	CWhipController whip;
+	cout << "daemon pid:  " << daemon.get_unique_pid() << endl
+			<< "rest pid: " << rest.get_unique_pid() << endl
+			<< "whip pid: " << whip.get_unique_pid() << endl;
 }
