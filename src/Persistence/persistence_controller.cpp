@@ -22,7 +22,7 @@
 using namespace std;
 
 #define BUFFSIZE 4096
-string file = "/home/jolin/Desktop/user_data.txt";
+string file = "/etc/time_machine.cfg";
 const char* file_path = file.c_str();
 
 int str2int(string str)

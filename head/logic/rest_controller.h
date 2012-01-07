@@ -10,13 +10,19 @@
 
 #include <unistd.h>
 
+#include "abstract_process_controller.h"
+
 /**
  * 控制休息
  */
-class CRestController
+class CRestController : public CAbsProcController
 {
 public:
 	CRestController();
+	~CRestController();
+
+	virtual void init_process();
+
 	/**
 	 * 开始等待下一次休息
 	 */
@@ -25,6 +31,7 @@ public:
 	 * 休息了！！！
 	 */
 	void do_rest();
+
 private:
 	bool go_on_waiting;
 };
