@@ -10,11 +10,18 @@
 #include "../../head/logic/rest_controller.h"
 
 
-CRestController::CRestController(pid_t parent_pid)
-	: go_on_waiting(true),
-	  daemon_pid(parent_pid)
+CRestController::CRestController()
+	: go_on_waiting(true)
 {
 
+}
+
+void CRestController::start_waiting()
+{
+	while (true)
+	{
+		pause();
+	}
 }
 
 void CRestController::do_rest()

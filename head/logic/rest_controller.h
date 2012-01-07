@@ -10,10 +10,16 @@
 
 #include <unistd.h>
 
+/**
+ * 控制休息
+ */
 class CRestController
 {
 public:
-	CRestController(pid_t parent_pid);
+	CRestController();
+	/**
+	 * 开始等待下一次休息
+	 */
 	void start_waiting();
 	/**
 	 * 休息了！！！
@@ -21,7 +27,6 @@ public:
 	void do_rest();
 private:
 	bool go_on_waiting;
-	pid_t daemon_pid;
 };
 
 

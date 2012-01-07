@@ -20,6 +20,7 @@
 
 #include "../../head/logic/daemon_controller.h"
 #include "../../head/logic/rest_controller.h"
+#include "../../head/logic/whip_controller.h"
 
 using namespace std;
 
@@ -113,10 +114,8 @@ void CDaemonController::init_daemon()
 	this->init_rest_child();
 	this->init_whip_child();
 
-	this->kill_rest_child();
 	while(true)
 	{
-
 		pause();
 	}
 
@@ -143,9 +142,8 @@ void CDaemonController::init_rest_child()
 		pid_t child_pid = getpid();
 		write(fds[1], &child_pid, sizeof(pid_t));
 
-		//TODO
-		CRestController restController();
-		for(;;);
+		CRestController restController;
+		restController.start_waiting();
 		exit(0);
 	}
 	else
@@ -177,7 +175,8 @@ void CDaemonController::init_whip_child()
 		pid_t child_pid = getpid();
 		write(fds[1], &child_pid, sizeof(pid_t));
 
-		//TODO
+		CWhipController whipController;
+		whipController.start_waiting();
 		exit(0);
 	}
 	else
