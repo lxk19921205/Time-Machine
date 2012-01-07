@@ -31,6 +31,14 @@ CSettingWindow::CSettingWindow(GladeXML* ui)
 			"ifStopTimingCheck");
 	ifCanDelayCheck = (GtkCheckButton*) glade_xml_get_widget(ui,
 			"ifCanDelayCheck");
+	restMusicPathButton = (GtkFileChooserButton*) glade_xml_get_widget(ui,
+			"restMusicPath");
+	whipMusicPathButton = (GtkFileChooserButton*) glade_xml_get_widget(ui,
+			"whipMusicPath");
+	imagePathButton = (GtkFileChooserButton*) glade_xml_get_widget(ui,
+			"imagePath");
+	commandLineEntry = (GtkEntry*) glade_xml_get_widget(ui, "commandLineEntry");
+	whipTextEntry = (GtkEntry*) glade_xml_get_widget(ui, "whipTextEntry");
 }
 
 GtkWidget* CSettingWindow::get_save_button()
@@ -92,6 +100,24 @@ UserData CSettingWindow::get_user_data()
 	bool ifCanDelay = gtk_toggle_button_get_active(
 			&(ifCanDelayCheck->toggle_button));
 	m_data.canDelay = ifCanDelay;
+
+	string restMusicPath = gtk_file_chooser_get_filename(
+			(GtkFileChooser*) restMusicPathButton);
+	m_data.restMp3Path = restMusicPath;
+
+	string whipMusicPath = gtk_file_chooser_get_filename(
+			(GtkFileChooser*) whipMusicPathButton);
+	m_data.whipMp3Path = whipMusicPath;
+
+	string imagePath = gtk_file_chooser_get_filename(
+			(GtkFileChooser*) imagePathButton);
+	m_data.imagePath = imagePath;
+
+	string commandLine = gtk_entry_get_text(commandLineEntry);
+	m_data.customCommand = commandLine;
+
+	string whipText = gtk_entry_get_text(whipTextEntry);
+	m_data.whipWord = whipText;
 
 	return m_data;
 }

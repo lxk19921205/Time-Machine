@@ -29,6 +29,11 @@ private:
 	GtkCheckButton* ifForceExitCheck;
 	GtkCheckButton* ifStopTimingCheck;
 	GtkCheckButton* ifCanDelayCheck;
+	GtkFileChooserButton* restMusicPathButton;
+	GtkFileChooserButton* whipMusicPathButton;
+	GtkFileChooserButton* imagePathButton;
+	GtkEntry* commandLineEntry;
+	GtkEntry* whipTextEntry;
 public:
 	CSettingWindow(GladeXML* ui);
 	GtkWidget* get_save_button();
