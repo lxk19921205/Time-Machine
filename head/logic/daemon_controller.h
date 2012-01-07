@@ -16,12 +16,7 @@ public:
 	CDaemonController();
 	~CDaemonController();
 
-	/**
-	 * 初始化daemon process，之后此进程就一直默默地工作着
-	 * 如果失败的话，此进程直接exit！
-	 */
-	void init_daemon();
-
+	virtual void init_process();
 	void kill_rest_child();
 
 private:
@@ -35,14 +30,6 @@ private:
 private:
 	static const char* TM_LOG_NAME;
 
-	/**
-	 * 初始化检测休息子进程
-	 */
-	void init_rest_child();
-	/**
-	 * 初始化检测激励子进程
-	 */
-	void init_whip_child();
 };
 
 

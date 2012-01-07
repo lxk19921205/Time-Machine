@@ -154,7 +154,7 @@ void init_main_window()
 void do_test1()
 {
 	CDaemonController daemon;
-	daemon.init_daemon();
+	daemon.init_process();
 	//daemon.unlock_file();
 	cout << "hello world" << endl;
 }

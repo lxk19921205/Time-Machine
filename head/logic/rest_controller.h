@@ -21,6 +21,8 @@ public:
 	CRestController();
 	~CRestController();
 
+	virtual void init_process();
+
 	/**
 	 * 开始等待下一次休息
 	 */

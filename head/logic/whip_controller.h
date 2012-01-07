@@ -19,6 +19,8 @@ public:
 	CWhipController();
 	~CWhipController();
 
+	virtual void init_process();
+
 	/**
 	 * 开始等待下一次激励！
 	 */

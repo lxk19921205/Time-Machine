@@ -30,6 +30,11 @@ public:
 	 */
 	virtual bool already_running();
 
+	/**
+	 * 初始化process，之后此进程就一直默默地工作着
+	 */
+	virtual void init_process() = 0;
+
 protected:
 	const char* TM_LOCK_FILE;
 	static mode_t TM_LOCK_MODE;

@@ -36,7 +36,7 @@ CDaemonController::~CDaemonController()
 {
 }
 
-void CDaemonController::init_daemon()
+void CDaemonController::init_process()
 {
 	//step 1
 	umask(0);
@@ -116,8 +116,11 @@ void CDaemonController::init_daemon()
 		exit(1);
 	}
 
-	this->init_rest_child();
-	this->init_whip_child();
+	CRestController restController;
+	restController.init_process();
+
+	CWhipController whipController;
+	whipController.init_process();
 
 	//TODO sigaction，处理SIGUSER1，结束all
 
@@ -129,73 +132,6 @@ void CDaemonController::init_daemon()
 	exit(0);
 }
 
-
-void CDaemonController::init_rest_child()
-{
-	//=====[0] read, [1] write=====
-//	int fds[2];
-//	pipe(fds);
-	int pid = fork();
-	if (pid < 0)
-	{
-		//error
-		syslog(LOG_ERR, "fork error in init_rest_child()");
-		return;
-	}
-	else if (pid == 0)
-	{
-		//child
-//		close(fds[0]);
-//		pid_t child_pid = getpid();
-//		write(fds[1], &child_pid, sizeof(pid_t));
-
-		CRestController restController;
-		restController.start_waiting();
-		exit(0);
-	}
-	else
-	{
-		//parent
-//		close(fds[1]);
-//		read(fds[0], &rest_pid, sizeof(pid_t));
-//		syslog(LOG_INFO, "rest_pid %d", rest_pid);
-		return;
-	}
-}
-
-void CDaemonController::init_whip_child()
-{
-	//=====[0] read, [1] write=====
-//	int fds[2];
-//	pipe(fds);
-	int pid = fork();
-	if (pid < 0)
-	{
-		//error
-		syslog(LOG_ERR, "fork error in init_whip_child()");
-		return;
-	}
-	else if (pid == 0)
-	{
-		//child
-//		close(fds[0]);
-//		pid_t child_pid = getpid();
-//		write(fds[1], &child_pid, sizeof(pid_t));
-
-		syslog(LOG_INFO, "prepare to whip waiting");
-		CWhipController whipController;
-		whipController.start_waiting();
-		exit(0);
-	}
-	else
-	{
-		//parent
-//		close(fds[1]);
-//		read(fds[0], &whip_pid, sizeof(pid_t));
-//		syslog(LOG_INFO, "whip_pid %d", whip_pid);
-		return;
-	}
-}
 
 void CDaemonController::kill_rest_child()
 {

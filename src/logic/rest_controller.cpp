@@ -6,6 +6,8 @@
  */
 
 #include <unistd.h>
+#include <syslog.h>
+#include <stdlib.h>
 
 #include "../../head/logic/rest_controller.h"
 
@@ -18,6 +20,25 @@ CRestController::CRestController()
 
 CRestController::~CRestController()
 {
+}
+
+void CRestController::init_process()
+{
+	int pid = fork();
+	if (pid < 0)
+	{
+		//error
+		syslog(LOG_ERR, "fork error in init_rest_child()");
+		return;
+	}
+	else if (pid == 0)
+	{
+		//child
+		this->start_waiting();
+		exit(0);
+	}
+	return;
+
 }
 
 void CRestController::start_waiting()
