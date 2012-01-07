@@ -9,7 +9,7 @@
 #define PERSISTENCE_CONTROLLER
 
 #include <fcntl.h>
-#include <string.h>
+#include <string>
 using namespace std;
 
 enum level{
