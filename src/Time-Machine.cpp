@@ -29,6 +29,8 @@ const char* STOP_CMD = "stop";
 const char* POSTPONE_CMD = "postpone";
 const char* STATUS_CMD = "status";
 
+CSettingWindow* settingWindow;
+
 /**
  * 开始
  */
@@ -53,6 +55,14 @@ void on_delay_button_clicked(GtkWidget* button, gpointer userdata)
 	//TODO
 }
 
+/**
+ * 获得用户数据
+ */
+void get_user_data(GtkWidget* button, gpointer userdata)
+{
+	settingWindow->get_user_data();
+}
+
 int main(int argc, char** argv)
 {
 	CController controller;
@@ -69,6 +79,9 @@ int main(int argc, char** argv)
 				G_CALLBACK(on_stop_button_clicked), (gpointer)"");
 		g_signal_connect(G_OBJECT(mainWindow.get_delay_button()), "clicked",
 				G_CALLBACK(on_delay_button_clicked), (gpointer)"");
+
+		g_signal_connect(G_OBJECT(settingWindow->get_save_button()), "clicked",
+				G_CALLBACK(get_user_data), (gpointer)"");
 		gtk_main();
 		return 0;
 	}
@@ -127,7 +140,7 @@ CMainWindow init_main_window()
 {
 	GladeXML* ui = glade_xml_new("mainFrame.glade", NULL, NULL);
 	CMainWindow mainWindow(ui);
-	CSettingWindow settingWindow(ui);
+	settingWindow = new CSettingWindow(ui);
 	return mainWindow;
 }
 

@@ -194,7 +194,7 @@
                   <widget class="GtkHScrollbar" id="levelHScrollbar">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="adjustment">0 0 100 45 45 10</property>
+                    <property name="adjustment">0 0 100 50 50 0</property>
                   </widget>
                   <packing>
                     <property name="expand">True</property>
@@ -242,7 +242,7 @@
                       </packing>
                     </child>
                     <child>
-                      <widget class="GtkEntry" id="entry1">
+                      <widget class="GtkEntry" id="intervalEntry">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="invisible_char">•</property>
@@ -292,7 +292,7 @@
                       </packing>
                     </child>
                     <child>
-                      <widget class="GtkEntry" id="entry2">
+                      <widget class="GtkEntry" id="lastEntry">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="invisible_char">•</property>
@@ -342,7 +342,7 @@
                       </packing>
                     </child>
                     <child>
-                      <widget class="GtkEntry" id="entry3">
+                      <widget class="GtkEntry" id="pauseEntry">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="invisible_char">•</property>
@@ -392,7 +392,7 @@
                       </packing>
                     </child>
                     <child>
-                      <widget class="GtkEntry" id="entry4">
+                      <widget class="GtkEntry" id="delayEntry">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="invisible_char">•</property>
