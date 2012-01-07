@@ -23,6 +23,12 @@ private:
 	GtkEntry* lastEntry;
 	GtkEntry* pauseEntry;
 	GtkEntry* delayEntry;
+	GtkCheckButton* ifStartWithPowerCheck;
+	GtkCheckButton* ifBeepCheck;
+	GtkCheckButton* ifShutScreenCheck;
+	GtkCheckButton* ifForceExitCheck;
+	GtkCheckButton* ifStopTimingCheck;
+	GtkCheckButton* ifCanDelayCheck;
 public:
 	CSettingWindow(GladeXML* ui);
 	GtkWidget* get_save_button();
