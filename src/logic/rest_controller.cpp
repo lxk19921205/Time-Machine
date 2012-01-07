@@ -50,9 +50,7 @@ void CRestController::init_process()
 		exit(1);
 	}
 
-	PersistenceController persistence;
-	persistence.readUserData(&setting);
-
+	this->read_setting();
 	this->set_signal();
 	this->start_waiting();
 
@@ -61,8 +59,12 @@ void CRestController::init_process()
 
 static void signal_handler(int signum, siginfo_t *info, void* context)
 {
-	//TODO time to rest
-	syslog(LOG_INFO, "time to rest~~~~~");
+	if (signum == SIGALRM)
+	{
+		CRestController restController;
+		restController.read_setting();
+		restController.do_rest();
+	}
 }
 
 
@@ -101,7 +103,9 @@ void CRestController::start_waiting()
 	}
 }
 
+
 void CRestController::do_rest()
 {
-	//TODO
+	syslog(LOG_INFO, "time to rest~~~~~");
+	//TODO 黑屏、放歌、锁键盘
 }

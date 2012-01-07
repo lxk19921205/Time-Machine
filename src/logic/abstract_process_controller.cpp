@@ -104,3 +104,10 @@ bool CAbsProcController::lock_file()
 
 	return true;
 }
+
+
+void CAbsProcController::read_setting()
+{
+	PersistenceController persistence;
+	persistence.readUserData(&setting);
+}
