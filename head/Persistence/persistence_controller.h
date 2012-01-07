@@ -30,7 +30,13 @@ enum level
 struct UserData
 {
 	//=====休息间隔 单位：分钟=====
-	int intervalTime;
+	int restIntervalTime;
+
+	//=====激励间隔 单位：分钟=====
+	int whipIntervalTime;
+
+	//=====休息锁定的时间 单位：second=====
+	int whipLastingTime;
 
 	//=====休息锁定的时间 单位：分钟=====
 	int lockTime;
@@ -39,19 +45,19 @@ struct UserData
 	int unLockTime;
 
 	//=====可以推迟几分钟=====
-	int delayTime;
+	//int delayTime;
 
 	//=====是否开机启动=====
 	bool ifStartWithPower;
 
 	//=====休息开始结束是否beep=====
-	bool ifBeep;
+	//bool ifBeep;
 
 	//=====休息是否关闭屏幕=====
 	bool ifCloseScreen;
 
 	//=====全屏是否暂停计时=====
-	bool ifStopTiming;
+	//bool ifStopTiming;
 
 	//=====休息时是否允许强制退出=====
 	bool canForceToExit;

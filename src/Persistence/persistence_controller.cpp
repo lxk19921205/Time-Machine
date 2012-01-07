@@ -47,10 +47,14 @@ void analyseString(UserData* userData, char* buff)
 		string value;
 		getline(eachLine,head,':');
 		getline(eachLine,value,':');
-		if(head.compare("intervalTime") == 0)
-			userData->intervalTime = str2int(value);
-		else if(head.compare("delayTime") == 0)
-			userData->delayTime = str2int(value);
+		if(head.compare("restIntervalTime") == 0)
+			userData->restIntervalTime = str2int(value);
+		else if(head.compare("whipIntervalTime") == 0)
+			userData->whipIntervalTime = str2int(value);
+//		else if(head.compare("delayTime") == 0)
+//			userData->delayTime = str2int(value);
+		else if(head.compare("whipLastingTime") == 0)
+			userData->whipLastingTime = str2int(value);
 		else if(head.compare("lockTime") == 0)
 			userData->lockTime = str2int(value);
 		else if(head.compare("unLockTime") == 0)
@@ -59,14 +63,14 @@ void analyseString(UserData* userData, char* buff)
 			userData->canDelay = str2int(value);
 		else if(head.compare("canForceToExit") == 0)
 			userData->canForceToExit = str2int(value);
-		else if(head.compare("ifBeep") == 0)
-			userData->ifBeep = str2int(value);
+//		else if(head.compare("ifBeep") == 0)
+//			userData->ifBeep = str2int(value);
 		else if(head.compare("ifCloseScreen") == 0)
 			userData->ifCloseScreen = str2int(value);
 		else if(head.compare("ifStartWithPower") == 0)
 			userData->ifStartWithPower = str2int(value);
-		else if(head.compare("ifStopTiming") == 0)
-			userData->ifStopTiming = str2int(value);
+//		else if(head.compare("ifStopTiming") == 0)
+//			userData->ifStopTiming = str2int(value);
 		else if(head.compare("userLevel") == 0)
 		{
 			int userLevel = str2int(value);
@@ -159,15 +163,16 @@ void PersistenceController::writeUserData(UserData& userData)
 		cout <<"open file failed!"<< endl;
 	}
 
-	writeLineByInt(fd, "intervalTime:", userData.intervalTime);
+	writeLineByInt(fd, "restIntervalTime:", userData.restIntervalTime);
+	writeLineByInt(fd, "whipIntervalTime:", userData.whipIntervalTime);
+	writeLineByInt(fd, "whipLastingTime:", userData.whipLastingTime);
 	writeLineByInt(fd, "lockTime:", userData.lockTime);
 	writeLineByInt(fd, "unLockTime:", userData.unLockTime);
-	writeLineByInt(fd, "delayTime:", userData.delayTime);
 
 	writeLineByInt(fd, "ifStartWithPower:", userData.ifStartWithPower);
-	writeLineByInt(fd, "ifBeep:", userData.ifBeep);
+	//writeLineByInt(fd, "ifBeep:", userData.ifBeep);
 	writeLineByInt(fd, "ifCloseScreen:", userData.ifCloseScreen);
-	writeLineByInt(fd, "ifStopTiming:", userData.ifStopTiming);
+	//writeLineByInt(fd, "ifStopTiming:", userData.ifStopTiming);
 	writeLineByInt(fd, "canForceToExit:", userData.canForceToExit);
 	writeLineByInt(fd, "canDelay:", userData.canDelay);
 	writeLineByInt(fd, "level:", userData.userLevel);
