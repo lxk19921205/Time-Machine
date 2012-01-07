@@ -127,6 +127,11 @@ void writeLineByString(int fd, string head, string aim)
 
 void writeLineByInt(int fd, string head, int aim)
 {
+	if(aim < 0)
+	{
+		cout <<"setting error!"<< endl;
+		return;
+	}
 	string tail = "\n";
 
 	//store head
