@@ -145,6 +145,7 @@ void do_test1()
 void do_test2()
 {
 	CDaemonController daemon;
+	cout << "pid:  " << daemon.get_unique_pid() << endl;
 	if (daemon.already_running())
 	{
 		cout << "already running" << endl;

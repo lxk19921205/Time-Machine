@@ -18,6 +18,7 @@
 #include <iostream>
 
 #include "../../head/logic/daemon_controller.h"
+#include "../../head/logic/rest_controller.h"
 
 using namespace std;
 
@@ -106,24 +107,99 @@ void CDaemonController::init_daemon()
 		exit(1);
 	}
 
+	this->init_rest_child();
+	this->init_whip_child();
 
-	//TODO 做该做的事！
 	while(true)
 	{
-		;
+
+		pause();
 	}
 
 	exit(0);
 }
 
 
+void CDaemonController::init_rest_child()
+{
+	//=====[0] read, [1] write=====
+	int fds[2];
+	pipe(fds);
+	int pid = fork();
+	if (pid < 0)
+	{
+		//error
+		syslog(LOG_ERR, "fork error when init_rest_child");
+		return;
+	}
+	else if (pid == 0)
+	{
+		//child
+		close(fds[0]);
+		pid_t child_pid = getpid();
+		write(fds[1], &child_pid, sizeof(pid_t));
+
+		//TODO
+		CRestController restController();
+		exit(0);
+	}
+	else
+	{
+		//parent
+		close(fds[1]);
+		read(fds[0], &this->rest_pid, sizeof(pid_t));
+		syslog(LOG_INFO, "rest_pid %d", rest_pid);
+		return;
+	}
+}
+
+void CDaemonController::init_whip_child()
+{
+	//=====[0] read, [1] write=====
+	int fds[2];
+	pipe(fds);
+	int pid = fork();
+	if (pid < 0)
+	{
+		//error
+		syslog(LOG_ERR, "fork error when init_whip_child");
+		return;
+	}
+	else if (pid == 0)
+	{
+		//child
+		close(fds[0]);
+		pid_t child_pid = getpid();
+		write(fds[1], &child_pid, sizeof(pid_t));
+
+		//TODO
+		exit(0);
+	}
+	else
+	{
+		//parent
+		close(fds[1]);
+		read(fds[0], &this->whip_pid, sizeof(pid_t));
+		syslog(LOG_INFO, "whip_pid %d", whip_pid);
+		return;
+	}
+}
+
+
 //=====public method=====
 bool CDaemonController::already_running()
+{
+	return this->get_unique_pid() != -1;
+}
+
+
+//=====public method=====
+pid_t CDaemonController::get_unique_pid()
 {
 	int fd = open(TM_LOCK_FILE, O_RDONLY, TM_LOCK_MODE);
 	if (fd < 0)
 	{
-		return false;
+		return -1;
 	}
 
 	struct flock fl;
@@ -135,7 +211,14 @@ bool CDaemonController::already_running()
 	fcntl(fd, F_GETLK, &fl);
 	//=====如果不存在锁，则将l_type设为F_UNLCK，其余信息不变=====
 	close(fd);
-	return fl.l_type != F_UNLCK;
+	if (fl.l_type == F_UNLCK)
+	{
+		return -1;
+	}
+	else
+	{
+		return fl.l_pid;
+	}
 }
 
 
