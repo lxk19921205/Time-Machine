@@ -22,6 +22,10 @@ public:
 	 * 测试此daemon process是否已经运行
 	 */
 	bool already_running();
+	/**
+	 * 拿到唯一运行的那个进程的pid，如果没有在运行，就返回-1
+	 */
+	pid_t get_unique_pid();
 
 private:
 	/**
@@ -42,6 +46,23 @@ private:
 	static const char* TM_LOCK_FILE;
 	static mode_t TM_LOCK_MODE;
 
+	/**
+	 * 检测休息的子进程pid
+	 */
+	pid_t rest_pid;
+	/**
+	 * 检测激励的子进程pid
+	 */
+	pid_t whip_pid;
+
+	/**
+	 * 初始化检测休息子进程
+	 */
+	void init_rest_child();
+	/**
+	 * 初始化检测激励子进程
+	 */
+	void init_whip_child();
 };
 
 

@@ -8,14 +8,19 @@
 #ifndef REST_CONTROLLER_H_
 #define REST_CONTROLLER_H_
 
+#include <unistd.h>
 
 class CRestController
 {
 public:
-	void try_rest();
-
+	CRestController(pid_t parent_pid);
+	/**
+	 * 休息了！！！
+	 */
+	void do_rest();
 private:
-
+	bool go_on_waiting;
+	pid_t daemon_pid;
 };
 
 
