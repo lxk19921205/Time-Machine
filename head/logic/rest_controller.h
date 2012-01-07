@@ -14,6 +14,7 @@ class CRestController
 {
 public:
 	CRestController(pid_t parent_pid);
+	void start_waiting();
 	/**
 	 * 休息了！！！
 	 */

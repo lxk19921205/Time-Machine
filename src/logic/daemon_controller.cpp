@@ -8,6 +8,7 @@
 #include <signal.h>
 #include <sys/stat.h>
 #include <sys/types.h>
+#include <sys/wait.h>
 #include <sys/resource.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -26,6 +27,8 @@ const char* CDaemonController::TM_LOG_NAME = "-----Time Machine d-----";
 const char* CDaemonController::TM_LOCK_FILE = "/var/run/TimeMachine.pid";
 mode_t CDaemonController::TM_LOCK_MODE = (S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 
+pid_t CDaemonController::rest_pid = -2;
+pid_t CDaemonController::whip_pid = -2;
 
 void CDaemonController::init_daemon()
 {
@@ -110,6 +113,7 @@ void CDaemonController::init_daemon()
 	this->init_rest_child();
 	this->init_whip_child();
 
+	this->kill_rest_child();
 	while(true)
 	{
 
@@ -129,7 +133,7 @@ void CDaemonController::init_rest_child()
 	if (pid < 0)
 	{
 		//error
-		syslog(LOG_ERR, "fork error when init_rest_child");
+		syslog(LOG_ERR, "fork error in init_rest_child()");
 		return;
 	}
 	else if (pid == 0)
@@ -141,13 +145,14 @@ void CDaemonController::init_rest_child()
 
 		//TODO
 		CRestController restController();
+		for(;;);
 		exit(0);
 	}
 	else
 	{
 		//parent
 		close(fds[1]);
-		read(fds[0], &this->rest_pid, sizeof(pid_t));
+		read(fds[0], &rest_pid, sizeof(pid_t));
 		syslog(LOG_INFO, "rest_pid %d", rest_pid);
 		return;
 	}
@@ -162,7 +167,7 @@ void CDaemonController::init_whip_child()
 	if (pid < 0)
 	{
 		//error
-		syslog(LOG_ERR, "fork error when init_whip_child");
+		syslog(LOG_ERR, "fork error in init_whip_child()");
 		return;
 	}
 	else if (pid == 0)
@@ -179,12 +184,19 @@ void CDaemonController::init_whip_child()
 	{
 		//parent
 		close(fds[1]);
-		read(fds[0], &this->whip_pid, sizeof(pid_t));
-		syslog(LOG_INFO, "whip_pid %d", whip_pid);
+		read(fds[0], &whip_pid, sizeof(pid_t));
+//		syslog(LOG_INFO, "whip_pid %d", whip_pid);
 		return;
 	}
 }
 
+void CDaemonController::kill_rest_child()
+{
+	int status;
+	syslog(LOG_INFO, "try to kill rest_child %d", rest_pid);
+	kill(rest_pid, SIGKILL);
+	wait(&status);
+}
 
 //=====public method=====
 bool CDaemonController::already_running()

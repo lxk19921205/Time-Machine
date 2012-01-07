@@ -27,6 +27,7 @@ public:
 	 */
 	pid_t get_unique_pid();
 
+	void kill_rest_child();
 private:
 	/**
 	 * 如果返回true，说明文件可以锁，那就锁上！因此此程序是当前唯一
@@ -49,11 +50,11 @@ private:
 	/**
 	 * 检测休息的子进程pid
 	 */
-	pid_t rest_pid;
+	static pid_t rest_pid;
 	/**
 	 * 检测激励的子进程pid
 	 */
-	pid_t whip_pid;
+	static pid_t whip_pid;
 
 	/**
 	 * 初始化检测休息子进程
