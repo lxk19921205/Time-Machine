@@ -122,7 +122,7 @@ void CDaemonController::init_process()
 	CWhipController whipController;
 	whipController.init_process();
 
-	//TODO sigaction，处理SIGUSER1，结束all
+	this->set_signal();
 
 	while(true)
 	{
@@ -131,6 +131,24 @@ void CDaemonController::init_process()
 
 	exit(0);
 }
+
+
+void signal_handler(int signo, siginfo_t *info, void* context)
+{
+	syslog(LOG_INFO, "signal handler caught it!!!");
+}
+
+
+void CDaemonController::set_signal()
+{
+	struct sigaction sa;
+	sigemptyset(&sa.sa_mask);
+	sa.sa_flags = 0;
+	sa.sa_sigaction = signal_handler;
+	sigaction(SIG_STOP_ALL, &sa, NULL);
+}
+
+
 
 
 void CDaemonController::kill_rest_child()

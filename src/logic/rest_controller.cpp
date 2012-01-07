@@ -39,7 +39,12 @@ void CRestController::init_process()
 	}
 
 	//child
+
+
+
 	this->start_waiting();
+
+
 	exit(0);
 }
 
@@ -54,5 +59,5 @@ void CRestController::start_waiting()
 
 void CRestController::do_rest()
 {
-
+	//TODO
 }

@@ -29,7 +29,7 @@ CAbsProcController::~CAbsProcController()
 
 pid_t CAbsProcController::get_unique_pid()
 {
-	syslog(LOG_INFO, "start to get pid of %s", TM_LOCK_FILE);
+//	syslog(LOG_INFO, "start to get pid of %s", TM_LOCK_FILE);
 	int fd = open(TM_LOCK_FILE, O_RDONLY, TM_LOCK_MODE);
 	if (fd < 0)
 	{
@@ -63,7 +63,7 @@ bool CAbsProcController::already_running()
 
 bool CAbsProcController::lock_file()
 {
-	syslog(LOG_INFO, "start to lock file of %s", TM_LOCK_FILE);
+//	syslog(LOG_INFO, "start to lock file of %s", TM_LOCK_FILE);
 	int fd = open(TM_LOCK_FILE, O_RDWR | O_CREAT, TM_LOCK_MODE);
 	if (fd < 0)
 	{
@@ -81,6 +81,7 @@ bool CAbsProcController::lock_file()
 	{
 		if (errno == EACCES || errno == EAGAIN)
 		{
+			syslog(LOG_INFO, "LOCKING ALREADY RUNNING %s", TM_LOCK_FILE);
 			//无法锁住文件，已经被锁住了，说明已经有一个程序在运行了
 			close(fd);
 			return false;

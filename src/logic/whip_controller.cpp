@@ -30,7 +30,7 @@ void CWhipController::init_process()
 		syslog(LOG_ERR, "fork error in init_whip_child()");
 		return;
 	}
-	else if (pid >= 0)
+	else if (pid > 0)
 	{
 		//parent
 		return;
