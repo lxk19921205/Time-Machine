@@ -29,9 +29,9 @@ void initPlayer(){
 			major, minor, micro, nano_str);
 }
 
-static void MusicController::play_music(gchar* file)
+void MusicController::play_music(gchar* file)
 {
-	initPlayer();
+/*	initPlayer();
 
 	//get the state of music
 	//GstState state;
@@ -74,15 +74,18 @@ static void MusicController::play_music(gchar* file)
 	gst_element_set_state(pipeline, GST_STATE_PLAYING);
 
 	g_main_loop_run(loop);
+*/
 }
 
-static void MusicController::end_music()
+void MusicController::end_music()
 {
+/*
 	//quit the music loop
 	g_main_loop_quit(loop);
 
 	//set the pipe state NULL
 	gst_element_set_state(pipeline, GST_STATE_NULL);
 	gst_object_unref(GST_OBJECT(pipeline));
+*/
 }
 
