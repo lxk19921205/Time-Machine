@@ -30,6 +30,7 @@ const char* START_CMD = "start";
 const char* STOP_CMD = "stop";
 const char* POSTPONE_CMD = "postpone";
 const char* STATUS_CMD = "status";
+const char* REST_CMD = "rest";
 
 CMainWindow* mainWindow;
 CSettingWindow* settingWindow;
@@ -125,6 +126,12 @@ int main(int argc, char** argv)
 		{
 			//=====显示休息参数=====
 			controller.show_status();
+			return 0;
+		}
+		if (strcmp(argv[1], REST_CMD) == 0)
+		{
+			//=====现在休息=====
+			controller.rest_now();
 			return 0;
 		}
 

@@ -49,3 +49,9 @@ void CController::show_help()
 			<< "  stop: 结束服务" << endl
 			<< "  postpone：推迟休息" << endl;
 }
+
+void CController::rest_now()
+{
+	//TODO
+	cout << "rest now" << endl;
+}

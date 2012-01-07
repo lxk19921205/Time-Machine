@@ -38,6 +38,11 @@ public:
 	 */
 	void show_help();
 
+	/**
+	 * 现在休息！
+	 */
+	void rest_now();
+
 private:
 
 };
