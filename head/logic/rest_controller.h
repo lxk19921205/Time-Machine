@@ -11,6 +11,7 @@
 #include <unistd.h>
 
 #include "abstract_process_controller.h"
+#include "../Persistence/persistence_controller.h"
 
 /**
  * 控制休息
@@ -33,7 +34,9 @@ public:
 	void do_rest();
 
 private:
-	bool go_on_waiting;
+	UserData setting;
+
+	void set_signal();
 };
 
 

@@ -112,7 +112,7 @@ void CDaemonController::init_process()
 	if (this->lock_file() == false)
 	{
 		//=====不是唯一运行的=====
-		syslog(LOG_INFO, "try to start up again when there is one service running!");
+		syslog(LOG_ERR, "try to start up daemon process again when there is one running!");
 		exit(1);
 	}
 
@@ -133,8 +133,9 @@ void CDaemonController::init_process()
 }
 
 
-void signal_handler(int signo, siginfo_t *info, void* context)
+static void signal_handler(int signo, siginfo_t *info, void* context)
 {
+	//TODO
 	syslog(LOG_INFO, "signal handler caught it!!!");
 }
 
@@ -159,5 +160,3 @@ void CDaemonController::kill_rest_child()
 //	wait(&status);
 	//TODO
 }
-
-
