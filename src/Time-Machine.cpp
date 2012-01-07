@@ -38,6 +38,8 @@ CSettingWindow* settingWindow;
 void on_start_button_clicked(GtkWidget* button, gpointer userdata)
 {
 	//TODO
+	gtk_window_fullscreen(mainWindow->get_main_window());
+	gtk_window_set_keep_above(GTK_WINDOW(mainWindow->get_main_window()),TRUE);
 }
 
 /**
