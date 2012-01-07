@@ -11,6 +11,7 @@
 #include <signal.h>
 #include <errno.h>
 #include <string.h>
+#include <sys/time.h>
 
 #include "../../head/logic/whip_controller.h"
 

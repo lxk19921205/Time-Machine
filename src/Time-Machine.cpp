@@ -164,8 +164,9 @@ void do_test2()
 	CDaemonController daemon;
 	CRestController rest;
 	CWhipController whip;
-	cout << "daemon pid:  " << daemon.get_unique_pid() << endl
-			<< "rest pid: " << rest.get_unique_pid() << endl
-			<< "whip pid: " << whip.get_unique_pid() << endl;
+	rest.turn_off_screen();
+//	cout << "daemon pid:  " << daemon.get_unique_pid() << endl
+//			<< "rest pid: " << rest.get_unique_pid() << endl
+//			<< "whip pid: " << whip.get_unique_pid() << endl;
 	//kill(daemon.get_unique_pid(), SIGUSR1);
 }

@@ -34,6 +34,12 @@ public:
 
 private:
 	void set_signal();
+
+public:
+	/**
+	 * 关闭屏幕！
+	 */
+	void turn_off_screen();
 };
 
 

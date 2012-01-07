@@ -13,9 +13,12 @@
 #include <signal.h>
 #include <sys/time.h>
 
+#include <iostream>
+
 #include "../../head/logic/rest_controller.h"
 #include "../../head/Persistence/persistence_controller.h"
 
+using namespace std;
 
 CRestController::CRestController()
 	: CAbsProcController("/var/run/TimeMachineRest.pid")
@@ -106,6 +109,28 @@ void CRestController::start_waiting()
 
 void CRestController::do_rest()
 {
-	syslog(LOG_INFO, "time to rest~~~~~");
 	//TODO 黑屏、放歌、锁键盘
+
+	//TODO BEEP
+	if (setting.ifCloseScreen)
+	{
+		this->turn_off_screen();
+	}
+}
+
+void CRestController::turn_off_screen()
+{
+	int pid = fork();
+	if (pid < 0)
+	{
+		//error
+		syslog(LOG_ERR, "fork error in do_rest()");
+		exit(1);
+	}
+	else if (pid == 0)
+	{
+		sleep(1);
+		execlp("xset","", "dpms", "force", "off", NULL);
+		exit(0);
+	}
 }
