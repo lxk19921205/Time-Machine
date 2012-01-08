@@ -8,6 +8,8 @@
 #include "../../head/ui_views/main-window.h"
 #include <glade/glade.h>
 
+CMainWindow* CMainWindow::mainWindow = NULL;
+
 CMainWindow::CMainWindow(GladeXML* ui) {
 	window = (GtkWindow*)glade_xml_get_widget(ui, "window");
 	startButton = glade_xml_get_widget(ui, "startButton");

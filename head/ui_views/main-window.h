@@ -25,6 +25,8 @@ public:
 	GtkWidget* get_start_button();
 	GtkWidget* get_stop_button();
 	GtkWidget* get_delay_button();
+
+	static CMainWindow* mainWindow;
 };
 
 #endif /* MAIN_WINDOW_H_ */

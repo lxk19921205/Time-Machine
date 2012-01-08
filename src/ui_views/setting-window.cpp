@@ -9,6 +9,8 @@
 #include <stdlib.h>
 #include <string>
 
+CSettingWindow* CSettingWindow::settingWindow = NULL;
+
 CSettingWindow::CSettingWindow(GladeXML* ui)
 {
 	GtkWidget* settingWindow = glade_xml_get_widget(ui, "settingWindow");
@@ -18,11 +20,8 @@ CSettingWindow::CSettingWindow(GladeXML* ui)
 	saveButton = glade_xml_get_widget(ui, "saveButton");
 	intervalEntry = (GtkEntry*) glade_xml_get_widget(ui, "intervalEntry");
 	lastEntry = (GtkEntry*) glade_xml_get_widget(ui, "lastEntry");
-	pauseEntry = (GtkEntry*) glade_xml_get_widget(ui, "pauseEntry");
-	delayEntry = (GtkEntry*) glade_xml_get_widget(ui, "delayEntry");
 	ifStartWithPowerCheck = (GtkCheckButton*) glade_xml_get_widget(ui,
 			"ifStartWithPowerCheck");
-	ifBeepCheck = (GtkCheckButton*) glade_xml_get_widget(ui, "ifBeepCheck");
 	ifShutScreenCheck = (GtkCheckButton*) glade_xml_get_widget(ui,
 			"ifShutScreenCheck");
 	ifForceExitCheck = (GtkCheckButton*) glade_xml_get_widget(ui,
@@ -71,20 +70,9 @@ UserData CSettingWindow::get_user_data()
 	int lockTime = atoi(lastEntryText.c_str());
 	m_data.lockTime = lockTime;
 
-	string pauseEntryText = gtk_entry_get_text(pauseEntry);
-	int unLockTime = atoi(pauseEntryText.c_str());
-	m_data.unLockTime = unLockTime;
-
-	string delayEntryText = gtk_entry_get_text(delayEntry);
-	int delayTime = atoi(delayEntryText.c_str());
-//	m_data.delayTime = delayTime;
-
 	bool ifStartWithPower = gtk_toggle_button_get_active(
 			&(ifStartWithPowerCheck->toggle_button));
 	m_data.ifStartWithPower = ifStartWithPower;
-
-	bool ifBeep = gtk_toggle_button_get_active(&(ifBeepCheck->toggle_button));
-//	m_data.ifBeep = ifBeep;
 
 	bool ifShutScreen = gtk_toggle_button_get_active(
 			&(ifShutScreenCheck->toggle_button));
@@ -93,10 +81,6 @@ UserData CSettingWindow::get_user_data()
 	bool ifForceExit = gtk_toggle_button_get_active(
 			&(ifForceExitCheck->toggle_button));
 	m_data.canForceToExit = ifForceExit;
-
-	bool ifStopTiming = gtk_toggle_button_get_active(
-			&(ifStopTimingCheck->toggle_button));
-//	m_data.ifStopTiming = ifStopTiming;
 
 	bool ifCanDelay = gtk_toggle_button_get_active(
 			&(ifCanDelayCheck->toggle_button));
