@@ -18,16 +18,6 @@
           </widget>
         </child>
         <child>
-          <widget class="GtkLabel" id="label29">
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
-          </widget>
-          <packing>
-            <property name="left_attach">1</property>
-            <property name="right_attach">2</property>
-          </packing>
-        </child>
-        <child>
           <widget class="GtkLabel" id="label30">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
@@ -171,6 +161,16 @@
             <property name="right_attach">2</property>
             <property name="top_attach">2</property>
             <property name="bottom_attach">3</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="GtkLabel" id="label13">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+          </widget>
+          <packing>
+            <property name="left_attach">1</property>
+            <property name="right_attach">2</property>
           </packing>
         </child>
       </widget>

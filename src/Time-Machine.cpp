@@ -42,8 +42,8 @@ void on_start_button_clicked(GtkWidget* button, gpointer userdata)
 {
 	//TODO
 	CFullScreenWindow::fullScreenWindow->show_fullscreen_window();
-
-
+	CFullScreenWindow::fullScreenWindow->set_whip_word("ABC");
+	CFullScreenWindow::fullScreenWindow->show_rest_time("120分钟");
 //	struct sigaction sa;
 //	sigemptyset(&sa.sa_mask);
 //	sa.sa_flags = 0;
