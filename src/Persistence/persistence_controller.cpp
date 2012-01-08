@@ -71,7 +71,7 @@ void analyseString(UserData* userData, char* buff)
 			userData->ifStartWithPower = str2int(value);
 //		else if(head.compare("ifStopTiming") == 0)
 //			userData->ifStopTiming = str2int(value);
-		else if(head.compare("userLevel") == 0)
+		else if(head.compare("level") == 0)
 		{
 			int userLevel = str2int(value);
 			level t;
@@ -112,10 +112,10 @@ void writeLineByString(int fd, string head, string aim)
 
 void writeLineByInt(int fd, string head, int aim)
 {
-	if(aim < 0)
+	if(aim <= 0)
 	{
-		cout <<"setting error!"<< endl;
-		return;
+//		cout <<"setting error!"<< endl;
+		aim = 3;
 	}
 	string tail = "\n";
 

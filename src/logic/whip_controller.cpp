@@ -49,9 +49,12 @@ void CWhipController::init_process()
 		exit(1);
 	}
 
+	return;
+
 	this->read_setting();
 	this->set_signal();
 	this->start_waiting();
+
 	exit(0);
 }
 

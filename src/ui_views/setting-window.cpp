@@ -106,3 +106,49 @@ UserData CSettingWindow::get_user_data()
 
 	return m_data;
 }
+
+void CSettingWindow::read_user_data(const UserData& data)
+{
+	if (data.userLevel == remind)
+	{
+		gtk_range_set_value(&(levelHScrollbar->scrollbar.range), 0);
+	}
+	else if (data.userLevel == remind_force)
+	{
+		gtk_range_set_value(&(levelHScrollbar->scrollbar.range), 50);
+	}
+	else
+	{
+		gtk_range_set_value(&(levelHScrollbar->scrollbar.range), 100);
+	}
+
+	char buffer[16];
+	sprintf(buffer, "%d", data.restIntervalTime);
+	gtk_entry_set_text(intervalEntry, buffer);
+
+	char buffer1[16];
+	sprintf(buffer1, "%d", data.lockTime);
+	gtk_entry_set_text(lastEntry, buffer1);
+
+	gtk_toggle_button_set_active(&(ifStartWithPowerCheck->toggle_button),
+			data.ifStartWithPower);
+	gtk_toggle_button_set_active(&(ifShutScreenCheck->toggle_button),
+			data.ifCloseScreen);
+	gtk_toggle_button_set_active(&(ifForceExitCheck->toggle_button),
+			data.canForceToExit);
+	gtk_toggle_button_set_active(&(ifCanDelayCheck->toggle_button),
+			data.canDelay);
+
+	gtk_file_chooser_set_filename((GtkFileChooser*) restMusicPathButton,
+			data.restMp3Path.c_str());
+
+	gtk_file_chooser_set_filename((GtkFileChooser*) whipMusicPathButton,
+			data.whipMp3Path.c_str());
+
+	gtk_file_chooser_set_filename((GtkFileChooser*) imagePathButton,
+			data.imagePath.c_str());
+
+	gtk_entry_set_text(commandLineEntry, data.customCommand.c_str());
+	gtk_entry_set_text(whipTextEntry, data.whipWord.c_str());
+
+}

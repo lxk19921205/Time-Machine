@@ -73,7 +73,16 @@ void on_delay_button_clicked(GtkWidget* button, gpointer userdata)
  */
 void get_user_data(GtkWidget* button, gpointer userdata)
 {
-	CSettingWindow::settingWindow->get_user_data();
+	UserData data = CSettingWindow::settingWindow->get_user_data();
+	PersistenceController persistence;
+	persistence.writeUserData(data);
+
+	struct UserData d;
+	persistence.readUserData(&d);
+	CSettingWindow::settingWindow->read_user_data(d);
+
+	sleep(2);
+	exit(0);
 }
 
 int main(int argc, char** argv)
@@ -161,6 +170,11 @@ void init_main_window()
 	CMainWindow::mainWindow = new CMainWindow(ui);
 	CSettingWindow::settingWindow = new CSettingWindow(ui);
 	CFullScreenWindow::fullScreenWindow = new CFullScreenWindow(ui);
+
+	PersistenceController persistence;
+	struct UserData data;
+	persistence.readUserData(&data);
+	CSettingWindow::settingWindow->read_user_data(data);
 }
 
 /**
