@@ -49,16 +49,17 @@ GtkWidget* CSettingWindow::get_save_button()
 UserData CSettingWindow::get_user_data()
 {
 	gdouble value = gtk_range_get_value(&(levelHScrollbar->scrollbar.range));
-	if (value == 0)
+	if (value >= 0 && value < 33)
 	{
 		m_data.userLevel = remind;
 	}
-	else if (value == 100)
+	else if (value <= 100 && value > 66)
 	{
 		m_data.userLevel = force;
 	}
 	else
 	{
+		//[33, 66]
 		m_data.userLevel = remind_force;
 	}
 
