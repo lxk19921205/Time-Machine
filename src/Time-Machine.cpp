@@ -15,6 +15,7 @@
 
 #include "./../head/ui_views/main-window.h"
 #include "./../head/ui_views/setting-window.h"
+#include "./../head/ui_views/fullscreen-window.h"
 #include "../head/logic/daemon_controller.h"
 #include "../head/logic/controller.h"
 #include "../head/logic/rest_controller.h"
@@ -36,7 +37,7 @@ const char* REST_CMD = "rest";
 
 CMainWindow* mainWindow;
 CSettingWindow* settingWindow;
-
+CFullScreenWindow* fullScreenWindow;
 
 /**
  * 开始
@@ -44,8 +45,7 @@ CSettingWindow* settingWindow;
 void on_start_button_clicked(GtkWidget* button, gpointer userdata)
 {
 	//TODO
-	gtk_window_fullscreen(mainWindow->get_main_window());
-	gtk_window_set_keep_above(GTK_WINDOW(mainWindow->get_main_window()),TRUE);
+	fullScreenWindow->show_fullscreen_window();
 
 
 //	struct sigaction sa;
@@ -163,6 +163,7 @@ void init_main_window()
 	GladeXML* ui = glade_xml_new("mainFrame.glade", NULL, NULL);
 	mainWindow = new CMainWindow(ui);
 	settingWindow = new CSettingWindow(ui);
+	fullScreenWindow = new CFullScreenWindow(ui);
 }
 
 /**
