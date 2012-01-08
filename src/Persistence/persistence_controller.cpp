@@ -97,25 +97,6 @@ void analyseString(UserData* userData, char* buff)
 	}
 }
 
-void PersistenceController::readUserData(UserData* userData)
-{
-	int fd;
-	char buff[BUFFSIZE];
-
-	if((fd = open(file_path, O_RDONLY)) < 0)
-	{
-		cout <<"open file failed!"<< endl;
-	}
-	if(read(fd, buff, BUFFSIZE) < 0)
-	{
-		cout <<"read file failed!"<< endl;
-	}
-
-	analyseString(userData, buff);
-
-	close(fd);
-}
-
 void writeLineByString(int fd, string head, string aim)
 {
 	string tail = "\n";
@@ -182,6 +163,56 @@ void PersistenceController::writeUserData(UserData& userData)
 	writeLineByString(fd, "customCommand:", userData.customCommand);
 	writeLineByString(fd, "imagePath:", userData.imagePath);
 	writeLineByString(fd, "whipWord:", userData.whipWord);
+
+	close(fd);
+}
+
+void PersistenceController::initFile(UserData *initData)
+{
+
+	initData->restIntervalTime = 45;
+	initData->lockTime = 2;
+	initData->unLockTime = 1;
+	initData->restMp3Path = "/home/andriy/陈洁仪 - 天冷就回来.mp3";
+
+	initData->ifStartWithPower = true;
+	initData->ifCloseScreen = false;
+	initData->canDelay = true;
+	initData->canForceToExit = false;
+	initData->userLevel = remind_force;
+	initData->imagePath = "";
+	initData->customCommand = "";
+
+	initData->whipIntervalTime = 20;
+	initData->whipLastingTime = 30;
+	initData->whipWord = "燃烧吧！小宇宙！";
+	initData->whipMp3Path = "/home/andriy/陈洁仪 - 天冷就回来.mp3";
+
+	writeUserData(*initData);
+}
+
+void PersistenceController::readUserData(UserData *userData)
+{
+	if (userData == NULL)
+	{
+		return;
+	}
+
+	int fd;
+	char buff[BUFFSIZE];
+
+	if((fd = open(file_path, O_RDONLY)) < 0)
+	{
+		//TODO initialize
+		initFile(userData);
+		return;
+	}
+	if(read(fd, buff, BUFFSIZE) < 0)
+	{
+		cout <<"read file failed!"<< endl;
+	}
+
+	analyseString(userData, buff);
 
 	close(fd);
 }

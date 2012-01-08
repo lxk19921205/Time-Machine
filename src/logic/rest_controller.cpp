@@ -132,8 +132,9 @@ void CRestController::do_rest()
 	//TODO 黑屏、放歌、锁键盘
 
 	//TODO BEEP
-	MusicController::play_music("hello world");
+	MusicController::play_music("/home/andriy/陈洁仪 - 天冷就回来.mp3");
 
+	syslog(LOG_INFO, "should close screen ? %d", setting.ifCloseScreen);
 	if (setting.ifCloseScreen)
 	{
 		this->turn_off_screen();
@@ -149,12 +150,15 @@ void CRestController::do_rest()
 	else if (pid == 0)
 	{
 		//TODO 黑屏
-
+		syslog(LOG_INFO, "another child process, black screen");
+		sleep(10);
+		syslog(LOG_INFO, "prepare to exit(0) of black screen process");
 		exit(0);
 	}
+	syslog(LOG_INFO, "parent process start to wait");
 	int status;
 	wait(&status);
-
+	syslog(LOG_INFO, "parent process finish waiting");
 	this->set_alt_enable(true);
 	MusicController::end_music();
 }

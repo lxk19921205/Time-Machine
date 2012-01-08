@@ -89,6 +89,8 @@ struct UserData
  */
 class PersistenceController
 {
+private:
+	void initFile(UserData *userData);
 public:
 	//=====读用户数据文件=====
 	void readUserData(UserData* data);

@@ -173,6 +173,9 @@ void do_test1()
 	CDaemonController daemon;
 	CRestController rest;
 	CWhipController whip;
+
+	rest.read_setting();
+	rest.do_rest();
 }
 
 void do_test2()
