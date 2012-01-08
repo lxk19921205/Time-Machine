@@ -29,8 +29,8 @@ void initPlayer(){
 		nano_str = "(Prerelease)";
 	else
 		nano_str = "";
-	printf ("This program is linked against GStreamer %d.%d.%d %s\n",
-			major, minor, micro, nano_str);
+//	printf ("This program is linked against GStreamer %d.%d.%d %s\n",
+//			major, minor, micro, nano_str);
 }
 
 void MusicController::play_music(gchar* file)
@@ -78,7 +78,6 @@ void MusicController::play_music(gchar* file)
 	gst_element_set_state(pipeline, GST_STATE_PLAYING);
 
 	g_main_loop_run(loop);
-
 }
 
 void MusicController::end_music()
@@ -89,6 +88,5 @@ void MusicController::end_music()
 	//set the pipe state NULL
 	gst_element_set_state(pipeline, GST_STATE_NULL);
 	gst_object_unref(GST_OBJECT(pipeline));
-
 }
 

@@ -20,6 +20,7 @@
 #include "../head/logic/controller.h"
 #include "../head/logic/rest_controller.h"
 #include "../head/logic/whip_controller.h"
+#include "../head/logic/music_controller.h"
 
 #include <signal.h>
 
@@ -181,4 +182,5 @@ void do_test2()
 	CRestController rest;
 	CWhipController whip;
 	rest.set_alt_enable(true);
+//	MusicController::end_music();
 }
