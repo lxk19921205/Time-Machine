@@ -22,7 +22,10 @@ private:
 	GtkLabel* restTimeLabel;
 	GtkLabel* whipLabel;
 
+	void init(GladeXML* ui);
+
 public:
+	CFullScreenWindow();
 	CFullScreenWindow(GladeXML* ui);
 
 	void show_fullscreen_window();

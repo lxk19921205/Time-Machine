@@ -49,7 +49,12 @@ private:
 	 * 设置是否可以alt，比如alt+f4，用来休息的时候避免被关掉，及移开tty
 	 * 通过xmodmap的方法设置的
 	 */
-	void set_alt_enable(bool enabled);
+public:	void set_alt_enable(bool enabled);
+private:
+	/**
+	 * 显示一个新的全屏窗口，在新的进程里
+	 */
+	void show_fullscreen(string& whipWord, long total_time);
 };
 
 

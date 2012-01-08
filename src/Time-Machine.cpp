@@ -78,12 +78,12 @@ void get_user_data(GtkWidget* button, gpointer userdata)
 int main(int argc, char** argv)
 {
 	CController controller;
+	gtk_init(&argc, &argv);
 	switch (argc)
 	{
 	case 1:
 	{
 		//=====开启GUI=====
-		gtk_init(&argc, &argv);
 		init_main_window();
 		g_signal_connect(G_OBJECT(CMainWindow::mainWindow->get_start_button()), "clicked",
 				G_CALLBACK(on_start_button_clicked), (gpointer)"");
@@ -180,4 +180,5 @@ void do_test2()
 	CDaemonController daemon;
 	CRestController rest;
 	CWhipController whip;
+	rest.set_alt_enable(true);
 }

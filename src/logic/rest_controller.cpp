@@ -14,14 +14,19 @@
 #include <sys/time.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <string>
 
 #include <iostream>
 
 #include "../../head/logic/rest_controller.h"
 #include "../../head/Persistence/persistence_controller.h"
 #include "../../head/logic/music_controller.h"
+#include "../../head/ui_views/fullscreen-window.h"
 
 using namespace std;
+
+CFullScreenWindow* fullScreenWindow = NULL;
+long left_seconds = 0;
 
 CRestController::CRestController()
 	: CAbsProcController("/var/run/TimeMachineRest.pid")
@@ -46,6 +51,8 @@ void CRestController::init_process()
 		//parent
 		return;
 	}
+
+	openlog("-----Time Machine Rest d-----", LOG_CONS, LOG_DAEMON);
 
 	//child
 
@@ -126,13 +133,53 @@ bool CRestController::is_night()
 	return false;
 }
 
+/**
+ * 返回一个代表此时间的string
+ */
+string parse_time(long seconds)
+{
+	string s;
+	char buffer[16];
+	if (seconds < 60)
+	{
+		sprintf(buffer, "00 : %2l", seconds);
+		return string(buffer);
+	}
+
+	long minutes = seconds / 60;
+	seconds %= 60;
+	sprintf(buffer, "%l:%2l", minutes, seconds);
+	return string(buffer);
+}
+
+/**
+ * full screen的signal处理
+ */
+void full_signal_handler(int signum, siginfo_t *info, void* context)
+{
+	if (signum == SIGALRM && fullScreenWindow != NULL)
+	{
+		syslog(LOG_INFO, "fullscreen signal with seconds: %l", left_seconds);
+		if (left_seconds <= 0)
+		{
+			gtk_main_quit();
+			delete fullScreenWindow;
+			fullScreenWindow = NULL;
+			exit(0);
+		}
+
+		fullScreenWindow->show_rest_time(parse_time(left_seconds));
+		left_seconds--;
+	}
+}
+
 
 void CRestController::do_rest()
 {
 	//TODO 黑屏、放歌、锁键盘
 
 	//TODO BEEP
-	MusicController::play_music("/home/andriy/陈洁仪 - 天冷就回来.mp3");
+//	MusicController::play_music("/home/andriy/陈洁仪 - 天冷就回来.mp3");
 
 	syslog(LOG_INFO, "should close screen ? %d", setting.ifCloseScreen);
 	if (setting.ifCloseScreen)
@@ -149,19 +196,63 @@ void CRestController::do_rest()
 	}
 	else if (pid == 0)
 	{
+		syslog(LOG_INFO, "start to show_fullscreen() in child process");
+
 		//TODO 黑屏
-		syslog(LOG_INFO, "another child process, black screen");
-		sleep(10);
-		syslog(LOG_INFO, "prepare to exit(0) of black screen process");
+		this->show_fullscreen(setting.whipWord, 10);
+//		this->show_fullscreen(setting.whipWord, setting.lockTime*60);
 		exit(0);
 	}
+
 	syslog(LOG_INFO, "parent process start to wait");
 	int status;
 	wait(&status);
 	syslog(LOG_INFO, "parent process finish waiting");
 	this->set_alt_enable(true);
-	MusicController::end_music();
+//	MusicController::end_music();
 }
+
+
+void CRestController::show_fullscreen(string& whipWord, long total_time)
+{
+	struct sigaction sa;
+	sigemptyset(&sa.sa_mask);
+	sa.sa_flags = 0;
+	sa.sa_sigaction = full_signal_handler;
+	sigaction(SIGALRM, &sa, NULL);
+
+	syslog(LOG_INFO, "fullscreen set signal finished");
+
+	fullScreenWindow = new CFullScreenWindow();
+	left_seconds = total_time;
+	fullScreenWindow->set_whip_word(whipWord);
+	fullScreenWindow->show_fullscreen_window();
+
+	syslog(LOG_INFO, "full screen start to gtk_main()");
+
+	gtk_main();
+	while (true)
+	{
+		struct timeval interval;
+		interval.tv_sec = 1;
+		interval.tv_usec = 0;
+
+		struct itimerval value;
+		value.it_interval = interval;
+		value.it_value = interval;
+
+		if (setitimer(ITIMER_REAL, &value, NULL) == -1)
+		{
+			//error
+			syslog(LOG_ERR, "rest timer error: %s", strerror(errno));
+			exit(1);
+		}
+		syslog(LOG_INFO, "full screen set a timer start to wait");
+
+		pause();
+	}
+}
+
 
 void CRestController::turn_off_screen()
 {

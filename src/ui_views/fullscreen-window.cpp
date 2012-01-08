@@ -10,7 +10,18 @@
 
 CFullScreenWindow* CFullScreenWindow::fullScreenWindow = NULL;
 
+CFullScreenWindow::CFullScreenWindow()
+{
+	GladeXML* ui = glade_xml_new("mainFrame.glade", NULL, NULL);
+	this->init(ui);
+}
+
 CFullScreenWindow::CFullScreenWindow(GladeXML* ui)
+{
+	this->init(ui);
+}
+
+void CFullScreenWindow::init(GladeXML* ui)
 {
 	window = (GtkWindow*) glade_xml_get_widget(ui, "fullScreenWindow");
 	restTimeLabel = (GtkLabel*) glade_xml_get_widget(ui, "restTimeLabel");
