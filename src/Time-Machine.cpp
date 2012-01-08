@@ -35,17 +35,13 @@ const char* POSTPONE_CMD = "postpone";
 const char* STATUS_CMD = "status";
 const char* REST_CMD = "rest";
 
-CMainWindow* mainWindow;
-CSettingWindow* settingWindow;
-CFullScreenWindow* fullScreenWindow;
-
 /**
  * 开始
  */
 void on_start_button_clicked(GtkWidget* button, gpointer userdata)
 {
 	//TODO
-	fullScreenWindow->show_fullscreen_window();
+	CFullScreenWindow::fullScreenWindow->show_fullscreen_window();
 
 
 //	struct sigaction sa;
@@ -76,7 +72,7 @@ void on_delay_button_clicked(GtkWidget* button, gpointer userdata)
  */
 void get_user_data(GtkWidget* button, gpointer userdata)
 {
-	settingWindow->get_user_data();
+	CSettingWindow::settingWindow->get_user_data();
 }
 
 int main(int argc, char** argv)
@@ -89,14 +85,14 @@ int main(int argc, char** argv)
 		//=====开启GUI=====
 		gtk_init(&argc, &argv);
 		init_main_window();
-		g_signal_connect(G_OBJECT(mainWindow->get_start_button()), "clicked",
+		g_signal_connect(G_OBJECT(CMainWindow::mainWindow->get_start_button()), "clicked",
 				G_CALLBACK(on_start_button_clicked), (gpointer)"");
-		g_signal_connect(G_OBJECT(mainWindow->get_stop_button()), "clicked",
+		g_signal_connect(G_OBJECT(CMainWindow::mainWindow->get_stop_button()), "clicked",
 				G_CALLBACK(on_stop_button_clicked), (gpointer)"");
-		g_signal_connect(G_OBJECT(mainWindow->get_delay_button()), "clicked",
+		g_signal_connect(G_OBJECT(CMainWindow::mainWindow->get_delay_button()), "clicked",
 				G_CALLBACK(on_delay_button_clicked), (gpointer)"");
 
-		g_signal_connect(G_OBJECT(settingWindow->get_save_button()), "clicked",
+		g_signal_connect(G_OBJECT(CSettingWindow::settingWindow->get_save_button()), "clicked",
 				G_CALLBACK(get_user_data), (gpointer)"");
 		gtk_main();
 		return 0;
@@ -161,9 +157,9 @@ int main(int argc, char** argv)
 void init_main_window()
 {
 	GladeXML* ui = glade_xml_new("mainFrame.glade", NULL, NULL);
-	mainWindow = new CMainWindow(ui);
-	settingWindow = new CSettingWindow(ui);
-	fullScreenWindow = new CFullScreenWindow(ui);
+	CMainWindow::mainWindow = new CMainWindow(ui);
+	CSettingWindow::settingWindow = new CSettingWindow(ui);
+	CFullScreenWindow::fullScreenWindow = new CFullScreenWindow(ui);
 }
 
 /**

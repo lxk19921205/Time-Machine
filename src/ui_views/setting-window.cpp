@@ -9,6 +9,8 @@
 #include <stdlib.h>
 #include <string>
 
+CSettingWindow* CSettingWindow::settingWindow = NULL;
+
 CSettingWindow::CSettingWindow(GladeXML* ui)
 {
 	GtkWidget* settingWindow = glade_xml_get_widget(ui, "settingWindow");

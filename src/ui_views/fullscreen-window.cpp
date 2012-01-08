@@ -8,6 +8,8 @@
 #include <glade/glade.h>
 #include <gtk/gtk.h>
 
+CFullScreenWindow* CFullScreenWindow::fullScreenWindow = NULL;
+
 CFullScreenWindow::CFullScreenWindow(GladeXML* ui)
 {
 	window = (GtkWindow*) glade_xml_get_widget(ui, "fullScreenWindow");
