@@ -142,13 +142,27 @@ string parse_time(long seconds)
 	char buffer[16];
 	if (seconds < 60)
 	{
-		sprintf(buffer, "00 : %2l", seconds);
+		if (seconds < 10)
+		{
+			sprintf(buffer, "00 : 0%d", seconds);
+		}
+		else
+		{
+			sprintf(buffer, "00 : %d", seconds);
+		}
 		return string(buffer);
 	}
 
 	long minutes = seconds / 60;
 	seconds %= 60;
-	sprintf(buffer, "%l:%2l", minutes, seconds);
+	if (seconds < 10)
+	{
+		sprintf(buffer, "%l:0%d", minutes, seconds);
+	}
+	else
+	{
+		sprintf(buffer, "%l:%d", minutes, seconds);
+	}
 	return string(buffer);
 }
 
@@ -159,7 +173,6 @@ void full_signal_handler(int signum, siginfo_t *info, void* context)
 {
 	if (signum == SIGALRM && fullScreenWindow != NULL)
 	{
-		syslog(LOG_INFO, "fullscreen signal with seconds: %l", left_seconds);
 		if (left_seconds <= 0)
 		{
 			gtk_main_quit();
@@ -230,27 +243,27 @@ void CRestController::show_fullscreen(string& whipWord, long total_time)
 
 	syslog(LOG_INFO, "full screen start to gtk_main()");
 
-	gtk_main();
-	while (true)
+	struct timeval interval;
+	interval.tv_sec = 1;
+	interval.tv_usec = 0;
+
+	struct itimerval value;
+	value.it_interval = interval;
+	value.it_value = interval;
+
+	if (setitimer(ITIMER_REAL, &value, NULL) == -1)
 	{
-		struct timeval interval;
-		interval.tv_sec = 1;
-		interval.tv_usec = 0;
-
-		struct itimerval value;
-		value.it_interval = interval;
-		value.it_value = interval;
-
-		if (setitimer(ITIMER_REAL, &value, NULL) == -1)
-		{
-			//error
-			syslog(LOG_ERR, "rest timer error: %s", strerror(errno));
-			exit(1);
-		}
-		syslog(LOG_INFO, "full screen set a timer start to wait");
-
-		pause();
+		//error
+		syslog(LOG_ERR, "rest timer error: %s", strerror(errno));
+		exit(1);
 	}
+	syslog(LOG_INFO, "full screen set a timer start to wait");
+
+	gtk_main();
+//	while (true)
+//	{
+//		pause();
+//	}
 }
 
 

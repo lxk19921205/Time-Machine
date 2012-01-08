@@ -26,7 +26,7 @@ void CFullScreenWindow::init(GladeXML* ui)
 	window = (GtkWindow*) glade_xml_get_widget(ui, "fullScreenWindow");
 	restTimeLabel = (GtkLabel*) glade_xml_get_widget(ui, "restTimeLabel");
 	whipLabel = (GtkLabel*) glade_xml_get_widget(ui, "whipLabel");
-	gtk_window_fullscreen(window);
+//	gtk_window_fullscreen(window);
 	gtk_window_set_keep_above(GTK_WINDOW(window), TRUE);
 }
 
