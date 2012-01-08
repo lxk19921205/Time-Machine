@@ -101,8 +101,8 @@ void CRestController::start_waiting()
 		interval.tv_sec = setting.restIntervalTime * 60;
 		interval.tv_usec = 0;
 
-		//TODO testing
-		interval.tv_sec = 10;
+//		//TODO testing
+//		interval.tv_sec = 10;
 
 		//=====白天长一点，晚上短一点=====
 		if (this->is_night())
@@ -294,19 +294,22 @@ void CRestController::show_fullscreen(string& whipWord, long total_time)
 
 void CRestController::turn_off_screen()
 {
-	int pid = fork();
-	if (pid < 0)
-	{
-		//error
-		syslog(LOG_ERR, "fork error in do_rest()");
-		exit(1);
-	}
-	else if (pid == 0)
-	{
-		sleep(1);
-		execlp("xset","", "dpms", "force", "off", NULL);
-		exit(0);
-	}
+	sleep(1);
+//	execlp("xset","", "dpms", "force", "off", NULL);
+	system("xset dpms force off");
+//	int pid = fork();
+//	if (pid < 0)
+//	{
+//		//error
+//		syslog(LOG_ERR, "fork error in do_rest()");
+//		exit(1);
+//	}
+//	else if (pid == 0)
+//	{
+//		sleep(1);
+//		execlp("xset","", "dpms", "force", "off", NULL);
+//		exit(0);
+//	}
 }
 
 

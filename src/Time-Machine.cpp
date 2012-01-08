@@ -81,7 +81,7 @@ void get_user_data(GtkWidget* button, gpointer userdata)
 	persistence.readUserData(&d);
 	CSettingWindow::settingWindow->read_user_data(d);
 
-	sleep(2);
+	sleep(1);
 	exit(0);
 }
 
@@ -195,6 +195,9 @@ void do_test2()
 	CDaemonController daemon;
 	CRestController rest;
 	CWhipController whip;
-	rest.set_alt_enable(true);
+//	rest.set_alt_enable(true);
+//	rest.turn_off_screen();
+	rest.read_setting();
+	rest.do_rest();
 //	MusicController::end_music();
 }
