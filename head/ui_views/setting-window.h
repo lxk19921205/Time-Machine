@@ -35,6 +35,8 @@ public:
 	CSettingWindow(GladeXML* ui);
 	GtkWidget* get_save_button();
 	UserData get_user_data();
+
+	static CSettingWindow* settingWindow;
 };
 
 

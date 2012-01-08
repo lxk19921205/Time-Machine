@@ -28,6 +28,8 @@ public:
 	void show_fullscreen_window();
 	void set_whip_word(string whipWord);
 	void show_rest_time(string time);
+
+	static CFullScreenWindow* fullScreenWindow;
 };
 
 
