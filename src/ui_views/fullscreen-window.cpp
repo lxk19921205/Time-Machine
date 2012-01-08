@@ -42,5 +42,5 @@ void CFullScreenWindow::set_whip_word(string whipWord)
 
 void CFullScreenWindow::show_rest_time(string time)
 {
-	gtk_label_set_text(whipLabel, time.c_str());
+	gtk_label_set_text(restTimeLabel, time.c_str());
 }
