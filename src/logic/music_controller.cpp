@@ -11,6 +11,10 @@
 #include "../../head/logic/music_controller.h"
 using namespace std;
 
+GMainLoop* MusicController::loop = NULL;
+GstElement* MusicController::pipeline = NULL;
+
+
 void initPlayer(){
 	const gchar *nano_str;
 	guint major, minor, micro, nano;
@@ -31,7 +35,6 @@ void initPlayer(){
 
 void MusicController::play_music(gchar* file)
 {
-/*	TODO
  	initPlayer();
 
 	//get the state of music
@@ -75,18 +78,17 @@ void MusicController::play_music(gchar* file)
 	gst_element_set_state(pipeline, GST_STATE_PLAYING);
 
 	g_main_loop_run(loop);
-*/
+
 }
 
 void MusicController::end_music()
 {
-/*	TODO
 	//quit the music loop
 	g_main_loop_quit(loop);
 
 	//set the pipe state NULL
 	gst_element_set_state(pipeline, GST_STATE_NULL);
 	gst_object_unref(GST_OBJECT(pipeline));
-*/
+
 }
 
